@@ -8,10 +8,10 @@ define('PROJEKT_NAME', 'snipFrame');
 define('BASEPATH', dirname(dirname(__FILE__)));
 define('CSS_DIR',   'css' . DIRECTORY_SEPARATOR);
 //facebook stuff
-define('APP_API_KEY', '304211642938465');
-define('APP_SECRET', '083426f58a39af764bcd59b9c69cdc1f');
-define('APP_ID', '304211642938465');
-define('FACEBOOK_REG_PERMS', 'publish_stream,user_interests,friends_interests,user_likes,friends_likes');
+define('APP_API_KEY', '');
+define('APP_SECRET', '');
+define('APP_ID', '');
+define('FACEBOOK_REG_PERMS', 'manage_pages');
 //facebook stuff ends here
 
 
