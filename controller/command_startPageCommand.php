@@ -26,6 +26,7 @@ class startPageCommand implements command {
         $req->setJSFiles('startPage.js');
         $renderEngine = $req->getView();
         //set the view// here start.php
+        $db =  ATdb::get_instance();
         $renderOverview = new render('start');
 
         //get the facebook object and at it to the worker

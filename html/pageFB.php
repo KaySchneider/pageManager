@@ -4,14 +4,10 @@
  * and open the template in the editor.
  */
 ?>
-<!--
-To change this template, choose Tools | Templates
-and open the template in the editor.
--->
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:og="http://opengraphprotocol.org/schema/"
-      xmlns:fb="http://www.facebook.com/2008/fbml">
+      xmlns:fb="http://www.facebook.com/2008/fbml" >
    <head>
 <?php
 print $this->addMetaTags();
@@ -27,7 +23,7 @@ print $this->addMetaTags();
       <!--<script src="http://connect.facebook.net/de_DE/all.js"></script>-->
       
       <meta name="keywords" content="add here some keywords" />
-      <meta name="description" content="iLike <?php print $this->addHeaderDescription(); ?>" />
+      <meta name="description" content="<?php print $this->addHeaderDescription(); ?>" />
       <meta name="author" content=" Kay Schneider" />
       <meta name="copyright" content="2010, Kay Schneider" />
       <meta name="revisit-after" content="2 Days" />

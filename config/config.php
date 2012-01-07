@@ -8,14 +8,14 @@ define('PROJEKT_NAME', 'snipFrame');
 define('BASEPATH', dirname(dirname(__FILE__)));
 define('CSS_DIR',   'css' . DIRECTORY_SEPARATOR);
 //facebook stuff
-define('APP_API_KEY', '');
-define('APP_SECRET', '');
-define('APP_ID', '');
+define('APP_API_KEY', '139785699470694');
+define('APP_SECRET', '2182a6004e19a583ca936a8f2463b362');
+define('APP_ID', APP_API_KEY);
 define('FACEBOOK_REG_PERMS', 'manage_pages');
 //facebook stuff ends here
 
 
-//setting development stufdf
+//setting development stuff
 define('CHECKTIME' , TRUE);
 
 define('LOCALE', 'de');
