@@ -38,7 +38,7 @@ define('TABLE_USER', '');
 
     
     define('DB_USER', '665c270781b3be');
-    define('DB_HOST', 'mysql://665c270781b3be:36ddca2c@us-mm-auto-dca-01.cleardb.com/heroku_ba4af5d9b0385be');
+    define('DB_HOST', '665c270781b3be:36ddca2c@us-mm-auto-dca-01.cleardb.com/heroku_ba4af5d9b0385be');
     define('DB_PASS', '36ddca2c');
     define('DB_BASE', 'heroku_ba4af5d9b0385be');
    
