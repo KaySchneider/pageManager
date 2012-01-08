@@ -20,9 +20,7 @@ print $this->addMetaTags();
       
      <?php print $this->addJSFiles(); ?>
       
-      <!--<script src="http://connect.facebook.net/de_DE/all.js"></script>-->
-      
-      <meta name="keywords" content="add here some keywords" />
+      <meta name="keywords" content="" />
       <meta name="description" content="<?php print $this->addHeaderDescription(); ?>" />
       <meta name="author" content=" Kay Schneider" />
       <meta name="copyright" content="2010, Kay Schneider" />

@@ -10,32 +10,7 @@
 class signedRequest {
 
     public function execute(Request $request) {
-        $reg = registry::getInstance();
-
-        if (!$request->issetParameter('signed_request')) {
-            return FALSE;
-        }
-        list($encoded_sig, $payload) = explode('.', $request->getParameter('signed_request'), 2);
-
-        // decode the data
-        $sig = $this->base64_url_decode($encoded_sig);
-        $data = json_decode($this->base64_url_decode($payload), true);
-
-        if (strtoupper($data['algorithm']) !== 'HMAC-SHA256') {
-            error_log('Unknown algorithm. Expected HMAC-SHA256');
-            return null;
-        }
-
-        // check sig
-        $expected_sig = hash_hmac('sha256', $payload, APP_SECRET, $raw = true);
-        if ($sig !== $expected_sig) {
-            error_log('Bad Signed JSON signature!');
-            return null;
-        }
-
-        $reg->setSignedRequest($data);
-        $this->setParamsFromRequest($data);
-        return $data;
+     
     }
 
     private function setParamsFromRequest($parsedRequest) {
