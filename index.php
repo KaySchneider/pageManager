@@ -13,6 +13,7 @@ include("config/config.php");
 
 include 'classes/autoloader.php';
 
+include("config/migrateHelper.php");
 //init time checker
 if (CHECKTIME == TRUE) {
     $timer = new stopTime();
