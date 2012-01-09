@@ -23,7 +23,7 @@ class startPageCommand implements command {
  
     public function execute(Request $request, Response $response) {
         $req = registry::getInstance();
-        $req->setJSFiles('startPage.js');
+        $req->setJSFiles('pageControl.js');
         $renderEngine = $req->getView();
         //set the view// here start.php
         $db =  ATdb::get_instance();

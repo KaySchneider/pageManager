@@ -21,12 +21,19 @@ class facebookUser implements filter {
         //$reg->setUser($user);
         $facebook = facebookFactory::getInstance();
         $fbObject = $facebook->getFacebook();
-        var_dump( $fbObject->getSignedRequest() );
+        $signedRequest = $fbObject->getSignedRequest() ;
         $fbWorker = new FacebookOperation($fbObject);
         $renderEngine = $reg->getView();
+        var_dump($signedRequest);
         if(!$renderEngine instanceof render)
             $renderEngine = new render('page');
-
+        if(!isset( $signedRequest['locale'] )) {
+            $signedRequest['locale'] = "en_US";
+        }
+      
+        define("USER_LOCALE", $signedRequest['locale']);
+        $reg->setView($renderEngine);
+      
         /**
          * Prüfen ob der Nutzer die Benötigten Rechte besitzt
          * Keine Rechte, die Rechte holen Nutzer anlegen!

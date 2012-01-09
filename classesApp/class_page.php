@@ -27,21 +27,7 @@ class page {
      */
     private final function getPageDataFromFB() {
         //get the user data from the database
-        $sql = "SELECT * FROM page WHERE fbid = \"" . mysql_real_escape_string($this->userId) . "\"";
-        $this->db->query($sql);
-        //if empty create user
-        $user = $this->db->get_row();
-        if(!isset($user['id'])) {
-            //this is an new user.....
-            $this->generateUser();
-        } else {
-            //set the vars in this object
-            $this->facebookNameFirst = $user['firstName'];
-            $this->facebookNameLast = $user['lastName'];
-            $this->locale = $user['locale'];
-            $this->link = $user['link'];
-            $this->distinct_id = $user['id'];
-        }
+        //dont get here the page data from facebook! make this in javascript
     }
     
     /**

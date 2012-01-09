@@ -52,18 +52,25 @@ print $this->addMetaTags();
 
       <!-- add here facebooks js api -->
       <script>
-         window.fbAsyncInit = function() {
-            FB.init({appId: '<?php print APP_ID ?>', status: true, cookie: true,xfbml: true});
-            FB.Canvas.setSize({width:700, height:2200});
-
-         };
-         (function() {
-            var e = document.createElement('script'); e.async = true;
-            e.src = document.location.protocol +
-               '//connect.facebook.net/de_DE/all.js';
+         var appId = <?php echo APP_ID ?>;
+        //save the original signed request in an javascript param
+        
+        var pageControlObj;
+        $('document').ready(function() {
+            //make an instance of the Object pageControl in the file js/pageControl.js
+            pageControlObj = new pageControl();
+        });
+        
+        /**
+         * load the all.js from the javscript facebook sdk asynchronusly
+         */
+        (function() {
+            var e = document.createElement('script');
+            e.src = document.location.protocol + '//connect.facebook.net/<?php  print USER_LOCALE; ?>/all.js'; //insert here the locale of the user, than the correct langauge of the all.js will be loaded
+            e.async = true;
             document.getElementById('fb-root').appendChild(e);
-           // FB.Canvas.setSize({width:700, height:2300});
-         }());
+        }()); 
+          
       </script>
 
 

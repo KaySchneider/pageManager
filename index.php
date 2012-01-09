@@ -28,7 +28,6 @@ $reg->setCSSFiles('detailFB.css');
 $reg->setCSSFiles('startFB.css');
 
 $reg->setJSFiles('jquery-1.6.min.js');
-$reg->setJSFiles('snipFrame.js');
 $reg->setJSFiles('facebookHelper.js');
 //base css files end here TODO: set this in the config
 /**
@@ -66,11 +65,11 @@ if ($request->issetParameter('json')) {
  */
 
 $cookie = $request->getCookies();
-$facebookuserFilter = new facebookUser();
-$controller->addPreFilter($facebookuserFilter);
+
 $layoutFilter = new layoutFilterFB();
 $controller->addPreFilter($layoutFilter);
-
+$facebookuserFilter = new facebookUser();
+$controller->addPreFilter($facebookuserFilter);
 $postLayoutFilter = new postLayoutFilter();
 $controller->addPostFilter($postLayoutFilter);
 
