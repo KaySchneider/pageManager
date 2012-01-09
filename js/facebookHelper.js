@@ -264,6 +264,13 @@ facebookHelper.prototype.getUserPages = function () {
     
 }
 
+facebookHelper.prototype.installNewTab = function (pageId,name) {
+     (function (fbHelper) {
+        FB.api('/' + pageId +  '/tabs?access_token=' + pageAccessToken  , function(response) {
+            fbHelper.sendLoginChangesEvent('pageFeed',response);
+        });
+    })(this);
+}
 
 facebookHelper.prototype.getLastFeed = function (pageId,pageAccessToken) {
     if(this.fbIsOn == false) {
