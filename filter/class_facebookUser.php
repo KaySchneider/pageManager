@@ -24,7 +24,7 @@ class facebookUser implements filter {
         $signedRequest = $fbObject->getSignedRequest() ;
         $fbWorker = new FacebookOperation($fbObject);
         $renderEngine = $reg->getView();
-        var_dump($signedRequest);
+       
         if(!$renderEngine instanceof render)
             $renderEngine = new render('page');
         if(!isset( $signedRequest['locale'] )) {

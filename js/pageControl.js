@@ -113,7 +113,7 @@ window.fbAsyncInit = function() {
         oauth : true
     });
     fbApiInit = true; //init flag
-    FB.Canvas.setAutoResize();
+    //FB.Canvas.setAutoResize();
 
     
 
