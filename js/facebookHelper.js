@@ -264,6 +264,34 @@ facebookHelper.prototype.getUserPages = function () {
     
 }
 
+
+facebookHelper.prototype.getLastFeed = function (pageId,pageAccessToken) {
+    if(this.fbIsOn == false) {
+        return true;
+    }
+   
+    (function (fbHelper) {
+
+        FB.api('/' + pageId +  '/feed?access_token=' + pageAccessToken  , function(response) {
+            fbHelper.sendLoginChangesEvent('pageFeed',response);
+        });
+    })(this);
+}
+
+facebookHelper.prototype.getPagesDetails = function (pageId, pageAccessToken) {
+    if(this.fbIsOn == false) {
+        return true;
+    }
+   
+    (function (fbHelper) {
+
+        FB.api('/' + pageId +  '?access_token=' + pageAccessToken  , function(response) {
+            fbHelper.sendLoginChangesEvent('pageData',response);
+        });
+    })(this);
+    
+}
+
 /**
  * getter for the userid
  */

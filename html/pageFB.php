@@ -31,8 +31,8 @@ print $this->addMetaTags();
 
       <div id="chat_invite_container" style="position: absolute; left: 100px; top: 200px"></div>
       <div id="fb-root"></div>
-      <div class="pageBox" >
-         <div class="content">
+      
+         
             <fb:like href="http://www.facebook.com/apps/application.php?id=<?php print APP_ID ?>" show_faces="true" width="200" font="tahoma"></fb:like>
 <?php
                 /**
@@ -40,12 +40,9 @@ print $this->addMetaTags();
                  */
                 print $this->vars['content'];
 ?>
-         </div>
+        
          
-         <div class="footer" >
-            <a href="?mode=impress">Impressum</a> | (c) Kay Schneider Production
-         </div>
-      </div>
+        
 
 
 

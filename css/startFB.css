@@ -11,7 +11,7 @@
    Syntax recommendation http://www.w3.org/TR/REC-CSS2/
 */
 body {
-    /*background-color:red;*/
+    background-color:#685E6E;
     /* background-image: url('../img/bg/christmass.jpg');*/
 }
 
@@ -300,4 +300,68 @@ input {
 .myBoxK {
     float:right;
     width:550px;
+}
+
+.menLeft {
+    height:600px;
+    overflow-x: hidden;
+    overflow-y:hidden;
+    border:1px solid black;
+    width: 250px;
+    float:left;
+}
+
+.menLeft ._innerC {
+    height:550px;
+    overflow-x: hidden;
+    overflow-y:scroll;
+    border:1px solid black;
+    width: 250px;
+    float:left;
+}
+
+.bigBoxRight {
+    float:left;
+    width:545px;
+    min-height: 600px;
+    border:1px solid black;
+    background: white;
+}
+
+.menLeft {
+    background: #F0F1FA;
+}
+.menLeft ._innerC div {
+    background: #F0F1FA;
+    border-bottom: 1px solid black;
+}
+
+.menLeft ._innerC div:hover {
+    background: #DCE0F5;
+    border-bottom: 1px solid black;
+}
+
+.menLeft ._innerC div p {
+    padding:20px;
+    width:200px;
+    font-size:14px;
+    cursor:hand;
+}
+
+.grid {
+    clear: both;
+    width:800px;
+    border:1px solid black;
+    position:absolute;
+    left:50%;
+    margin-left:-400px;
+}
+
+.search input {
+    padding:5px;
+    font-size: 15px;
+} 
+
+.waiter {
+    
 }
