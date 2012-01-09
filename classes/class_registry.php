@@ -193,6 +193,7 @@ class registry {
             $insert = array($filename);
         } elseif(is_array($arr)) {
             $insert = array_merge($arr,array($filename) );
+            $insert = array_unique($insert);
         }
         $this->set(self::KEY_CSS_FILES, $insert);
     }
@@ -207,6 +208,7 @@ class registry {
             $insert = array($filename);
         } elseif(is_array($arr)) {
             $insert = array_merge($arr,array($filename) );
+            $insert = array_unique($insert);
         }
         $this->set(self::KEY_JS_FILES, $insert);
     }

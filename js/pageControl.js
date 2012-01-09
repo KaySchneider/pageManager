@@ -112,9 +112,9 @@ window.fbAsyncInit = function() {
         xfbml  : true,  // parse XFBML
         oauth : true
     });
-
-    FB.Canvas.setAutoResize();
     fbApiInit = true; //init flag
+    FB.Canvas.setAutoResize();
+
     
 
 };

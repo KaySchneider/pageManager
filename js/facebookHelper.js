@@ -1,6 +1,7 @@
 function fbEnsureInitObj(obj, method) {
     if(!window.fbApiInit) {
-        setTimeout(function() {
+       setTimeout(function() {
+            console.log(window.fbApiInit);
             fbEnsureInitObj(obj,method);
         }, 50);
     } else {
@@ -66,6 +67,7 @@ var facebookHelper = function(namespace) {
      *checks if the facebook Obj is avaiable,
      *if it is avaiable, set fbIsOn = true, and load the user details from facebook
      */
+    console.log('A');
     this.checkFacebook();
 }
 
@@ -87,17 +89,18 @@ facebookHelper.prototype.checkAppPerms = function (callbackTrue,callbackFalse) {
     (function (fbHelper) {
         FB.getLoginStatus(function(response) {
             //the user is connected with the app
+            console.log(response, FB);
             if (response.status === 'connected') {
                 fbHelper.accessToken = response.authResponse.accessToken;//set the accessToken
                 fbHelper.userId = response.authResponse.userID;//set the userId
                 fbHelper.getUserData();//set the user Details
                 window.userCheck = true;
-                return true;
+              
             } else if (response.status === 'not_authorized') {
             // the user is logged in to Facebook, 
             //but not connected to the app
-            window.userCheck = true;
-                return false;
+            window.userCheck = false;
+           
             } else {
             // the user isn't even logged in to Facebook.
             window.userCheck = true;
@@ -131,7 +134,7 @@ facebookHelper.prototype.authorize = function(function_yes, function_no)
                 function_yes();
             } else {
                 //set the window user check to false
-                window.userCheck = false;
+                window.userCheck = true;
                 // no user session available, someone you dont know
                 fbHelper.doAuth(function_yes,function_no);
             }
@@ -170,6 +173,7 @@ facebookHelper.prototype.doAuth = function (function_yes,function_no) {
  */
 facebookHelper.prototype.checkFacebook = function () {
     (function (fbHelperObj) {
+        console.log("S");   
         fbEnsureInitObj(fbHelperObj,"setFacebookOn");    
     })(this);
     
@@ -285,3 +289,5 @@ facebookHelper.prototype.getAccessToken = function () {
 
 
 facebookHelper = new facebookHelper(['facebookHelper']);
+
+
