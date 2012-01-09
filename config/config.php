@@ -11,7 +11,7 @@ define('PROJEKT_NAME', 'snipFrame');
 define('BASEPATH', dirname(dirname(__FILE__)));
 define('CSS_DIR', 'css' . DIRECTORY_SEPARATOR);
 //facebook stuff
-define('CANVAS_URL', "http://apps.facebook.com/pagemanagerdev/");
+define('CANVAS_URL', "https://apps.facebook.com/pagehelper/");
 define('FACEBOOK_REG_PERMS', 'manage_pages');
 //facebook stuff ends here
 //setting development stuff
