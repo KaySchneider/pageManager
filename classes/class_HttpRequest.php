@@ -40,6 +40,9 @@ class HttpRequest implements Request {
     }
 
     public function getCookies() {
+        if(!isset($_SERVER['HTTP_COOKIE']) ) {
+            return null;
+        }
         $cookieRAW =  $_SERVER['HTTP_COOKIE'];
         $cookieRA = explode(';',$cookieRAW);
         //$cookies = explode();
