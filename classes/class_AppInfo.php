@@ -90,8 +90,8 @@ class AppInfo {
         $hostBase = explode("/", str_replace("@", "", $moreDiff[1]));
         AppInfo::$databaseHost = $hostBase[0];
 
-        $clearBase = str_replace("heroku_", "", $hostBase[1]);
-        AppInfo::$databaseBase = $clearBase;
+        //$clearBase = str_replace("heroku_", "", $hostBase[1]);
+        AppInfo::$databaseBase = $hostBase[1];
     }
 
     /**
