@@ -46,7 +46,8 @@ $controller = new FrontController($resolver);
  */
 $eventDispatcher = eventDispatcher::getInstance();
 $exceptionLogger = new exceptionLogger();
-//$eventDispatcher->addHandler('onFBUserNoRights', $fbUserGetRights);
+$fbUserGetRights = new getFacebookRights();     
+$eventDispatcher->addHandler('onFBUserNoRights', $fbUserGetRights);
 $eventDispatcher->addHandler('onException', $exceptionLogger);
 
 
@@ -65,6 +66,8 @@ if ($request->issetParameter('json')) {
  */
 
 $cookie = $request->getCookies();
+$facebookuserFilter = new facebookUser();
+$controller->addPreFilter($facebookuserFilter);
 $layoutFilter = new layoutFilterFB();
 $controller->addPreFilter($layoutFilter);
 

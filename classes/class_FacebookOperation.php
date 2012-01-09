@@ -16,7 +16,7 @@ class FacebookOperation {
     }
 
     public function checkLoginState() {
-        $session = $this->facebook->getSession();
+        $session = $this->facebook->getSignedRequest();
         return $session;
     }
 
@@ -84,7 +84,21 @@ class FacebookOperation {
             return false;
         }
     }
-
+    /**
+     * returns the  pages where the given user is an admin
+     * @param type $userId
+     * @return boolean 
+     */
+    public function getUserPagesAdmin($userId) {
+        try {
+            $user = $this->facebook->api('/'.$userId. '/');
+            return $user;
+        } catch(FacebookApiException $e) {
+            $e;
+            return false;
+        }
+    }
+    
     public function getUser($userId) {
         try {
             $user = $this->facebook->api('/'.$userId);

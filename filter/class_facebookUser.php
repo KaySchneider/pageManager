@@ -21,6 +21,7 @@ class facebookUser implements filter {
         //$reg->setUser($user);
         $facebook = facebookFactory::getInstance();
         $fbObject = $facebook->getFacebook();
+        var_dump( $fbObject->getSignedRequest() );
         $fbWorker = new FacebookOperation($fbObject);
         $renderEngine = $reg->getView();
         if(!$renderEngine instanceof render)
@@ -33,7 +34,11 @@ class facebookUser implements filter {
         $userIdFF = $fbWorker->getFB_userId();
         if(!$fbWorker->checkLoginState() && empty($userIdFF)) {
             eventDispatcher::getInstance()->triggerEvent('onFBUserNoRights');
+        } else {
+            $user = new user($userIdFF);
+            $reg->setUser($user);
         }
+        
         /**
          * Wenn bis hier dann ist alles OK! nun Prüfen ob der Nutzer zum ersten mal bei uns
          * angelangt ist! wenn ja dann Nutzer anlegen!

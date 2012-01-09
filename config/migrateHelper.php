@@ -13,5 +13,5 @@ define('DB_HOST', AppInfo::dataBaseHost());
 define('DB_PASS', AppInfo::dataBasePass());
 define('DB_BASE', AppInfo::dataBaseBase());
 
-var_dump(DB_USER,DB_HOST,DB_PASS,DB_BASE);
+//var_dump(DB_USER,DB_HOST,DB_PASS,DB_BASE);
 ?>

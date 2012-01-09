@@ -22,7 +22,7 @@ class registry {
     const KEY_USER_LOCALE = 'userlocae';
     const KEY_CSS_FILES = 'cssFiles';
     const KEY_JS_FILES = 'jsFiles';
-    
+  
     public static function getInstance() {
         if(self::$instance === null) {
             self::$instance = new registry();
@@ -31,7 +31,7 @@ class registry {
     }
 
     protected  function  __construct() {
-
+        $this->sessionReader();
     }
 
     protected function  __clone() {
@@ -71,6 +71,7 @@ class registry {
     }
 
     protected function get($key) {
+        
         if(isset($this->values[$key])) {
             return $this->values[$key];
         }

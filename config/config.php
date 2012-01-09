@@ -42,7 +42,7 @@ $ZENDDIR['LOCAL'] = ''; //$ZENDDIR['LOCAL'] . DIRECTORY_SEPARATOR
 $ZENDDIR['SERVER'] = dirname(BASEPATH) . DIRECTORY_SEPARATOR . 'Zend' . DIRECTORY_SEPARATOR . 'library' . DIRECTORY_SEPARATOR;
 define('ZENDDIR', $ZENDDIR['SERVER']);
 
-set_include_path(get_include_path() . PATH_SEPARATOR . $ZENDDIR['SERVER'] . DIRECTORY_SEPARATOR);
+//set_include_path(get_include_path() . PATH_SEPARATOR . $ZENDDIR['SERVER'] . DIRECTORY_SEPARATOR);
 
 //    define('PHPMAILER', BASEPATH. DIRECTORY_SEPARATOR . 'phpmailer' . DIRECTORY_SEPARATOR . 'class.phpmailer.php');
 ?>
