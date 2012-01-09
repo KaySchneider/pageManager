@@ -7,7 +7,7 @@
  *
  * 
  */
-error_reporting(E_ALL);
+error_reporting(E_WARNING);
 session_start();
 include("config/config.php");
 

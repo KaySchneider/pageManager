@@ -32,7 +32,8 @@ class user  {
      * for the actually userid in this object
      */
     private final function getUserDataFromFB() {
-        
+        //get the user data from the database
+        $sql = "";
     }
     
     /**

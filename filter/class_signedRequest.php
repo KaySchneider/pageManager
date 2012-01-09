@@ -10,7 +10,8 @@
 class signedRequest {
 
     public function execute(Request $request) {
-     
+        $facebookFF = facebookFactory::getInstance();
+        
     }
 
     private function setParamsFromRequest($parsedRequest) {

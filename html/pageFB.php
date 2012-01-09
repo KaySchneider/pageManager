@@ -22,14 +22,10 @@ print $this->addMetaTags();
       
       <meta name="keywords" content="" />
       <meta name="description" content="<?php print $this->addHeaderDescription(); ?>" />
-      <meta name="author" content=" Kay Schneider" />
-      <meta name="copyright" content="2010, Kay Schneider" />
+      <meta name="author" content="Kay Schneider" />
+      <meta name="copyright" content="2012, Kay Schneider, hack the graph" />
       <meta name="revisit-after" content="2 Days" />
       <meta name="expires" content="never" />
-
-      
-
-
    </head>
    <body >
 

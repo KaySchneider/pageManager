@@ -24,8 +24,8 @@ define('likes_per_page', 5);
 
 define('TEMPDIR', BASEPATH . DIRECTORY_SEPARATOR . 'workTemp');
 
-define('STANDARD_TITLE', 'snipframe');
-define('STANDARD_DESCRIPTION', 'SNIPFRAME THE SOCIAL FRAMEWORK');
+define('STANDARD_TITLE', 'pageManager -- keep your Communitys in eyes');
+define('STANDARD_DESCRIPTION', 'pagemanager, the social page manager');
 
 
 /**
