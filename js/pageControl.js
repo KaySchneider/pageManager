@@ -4,7 +4,7 @@ var pageControl = function () {
     })(this);
     this.signedRequest = null;
     console.log("buh");
-    //facebookHelper.registForLoginChange(this,'receiveLoginChange');
+    facebookHelper.registForLoginChange(this,'receiveMessage');
     
 }
 
@@ -22,9 +22,51 @@ pageControl.prototype.init = function () {
         width: 840, 
         height: 480
     });
-        console.log("buh");
     this.getSignedRequest();
     this.addEvents();
+    this.loadDefaultContent();
+    this.pages;
+}
+
+pageControl.prototype.loadDefaultContent = function () {
+    this.UserPages();
+}
+
+/**
+ * load the content.. build the pages stuff!
+ */
+pageControl.prototype.UserPages = function () {
+    facebookHelper.getUserPages();
+}
+
+/**
+ * receive user data
+ */
+pageControl.prototype.receiveMessage = function (message) {
+    if(message.message == 'pages') {
+        this.parsePages(message.data);
+    }
+}
+
+pageControl.prototype.parsePages = function (message) {
+    console.log(message);
+    this.pages = message.data;
+    /**
+     * build here the html
+     */
+    
+    $(this.pages).each(function ( value, item ) {
+        console.log(value,item);
+        var Insert = $('.menLeft');
+        var div = document.createElement('div');
+        var p = document.createElement('p');
+        var txt = document.createTextNode(item.name);
+        txt.kaId = item.id;
+        p.appendChild(txt);
+        div.appendChild(p);
+        Insert.append(div);
+        
+    });
 }
  
  

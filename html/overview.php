@@ -1,9 +1,20 @@
 <?php
 /**
- * shiow here an overview over the pages an user
- * is an admin!  
+ * start here with the page Layout! For the overview... 
+ * loads all the "big" boxes and load it then via javascript!s 
  */
 ?>
+<div class="grid" >
+    <div class="menLeft">
+        <!-- add here the pages stuff -->
+        
+    </div>
+    <div class="bigBoxRight">
+        <!-- add here the startPage Stuff -->
+        
+    </div>
+</div> 
+
 
 <script language="text/javascript" >
     $('document').ready(function() {

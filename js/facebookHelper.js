@@ -158,7 +158,7 @@ facebookHelper.prototype.doAuth = function (function_yes,function_no) {
                 fbHelper.userId = response.authResponse.userID; //set the userId in the object
                 fbHelper.accessToken = response.authResponse.accessToken;//set tje accessToken 
                 fbHelper.signed_request = response.authResponse.signedRequest;//set the signedRequest
-                fbHelper.sendLoginChangesEvent(response);
+                fbHelper.sendLoginChangesEvent('login',response);
                 function_yes();
             } else {
                 function_no();
@@ -193,7 +193,7 @@ facebookHelper.prototype.setFacebookOn = function () {
 /**
  * send the changes to the receiver when the login state changes
  */
-facebookHelper.prototype.sendLoginChangesEvent = function (response) {
+facebookHelper.prototype.sendLoginChangesEvent = function (message,data) {
     var max = this.observerObjects.length;
     max  = max-1;
     //iterate over the observerObjects
@@ -201,7 +201,8 @@ facebookHelper.prototype.sendLoginChangesEvent = function (response) {
         /**
          * call the __call method in the object!
          */
-        this.observerObjects[i][0].__call(this.observerObjects[i][1],response);
+        dataObj = {'data':data, 'message':message};
+        this.observerObjects[i][0].__call(this.observerObjects[i][1],dataObj);
     }
 }
 
@@ -237,10 +238,27 @@ facebookHelper.prototype.getUserData = function () {
     if(this.fbIsOn == false) {
         return true;
     }
-   
+    
     (function (fbHelper) {
         FB.api('/me?access_token=' + this.accessToken , function(response) {
             fbHelper.userData = response;
+        });
+    })(this);
+    
+}
+
+/**
+ * call the userData from facebook
+ */
+facebookHelper.prototype.getUserPages = function () {
+    if(this.fbIsOn == false) {
+        return true;
+    }
+   
+    (function (fbHelper) {
+
+        FB.api('/' + fbHelper.userId + '/accounts' + '?access_token=' + fbHelper.accessToken , function(response) {
+            fbHelper.sendLoginChangesEvent('pages',response);
         });
     })(this);
     
