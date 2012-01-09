@@ -32,14 +32,14 @@ class facebookUser implements filter {
         }
       
         define("USER_LOCALE", $signedRequest['locale']);
-        $reg->setView($renderEngine);
+       
       
         /**
          * Prüfen ob der Nutzer die Benötigten Rechte besitzt
          * Keine Rechte, die Rechte holen Nutzer anlegen!
          */
         $userIdFF = $fbWorker->getFB_userId();
-        if(!$fbWorker->checkLoginState() && empty($userIdFF)) {
+        if( empty($userIdFF)) {
             eventDispatcher::getInstance()->triggerEvent('onFBUserNoRights');
         } else {
             $user = new user($userIdFF);
