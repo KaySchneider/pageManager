@@ -3,9 +3,10 @@ var pageControl = function () {
         userEnsureInitObj(pageObj,"init");    
     })(this);
     this.signedRequest = null;
-       var img = new Image();
+    var img = new Image();
     img.src = 'img/waiting.gif'
     this.waitImg = img;
+    this.ne = new newElements();
     facebookHelper.registForLoginChange(this,'receiveMessage');
     
 }
@@ -52,6 +53,9 @@ pageControl.prototype.receiveMessage = function (message) {
     } else if( message.message == 'pageFeed') {
         this.showPageFeed(message.data);
     }
+    else if( message.message == 'installTab') {
+        console.log(message );
+    }
 }
 
 pageControl.prototype.showPageFeed = function ( message ) {
@@ -89,36 +93,76 @@ pageControl.prototype.parsePages = function (message) {
         });
     })(this);
 }
-
+pageControl.prototype.createNewTabElement = function (pageId) {
+    this.pageId = pageId;
+    var tab = document.createElement("div");
+    var TabTxt = document.createTextNode("add new Page Tab");
+    (function (pcObj,tab){
+        
+        $(tab).click(function () {
+            facebookHelper.installNewTab(pcObj.pageId);
+        });
+        
+    })(this,tab);
+    tab.appendChild(TabTxt);
+    
+    return tab;
+    
+}
 pageControl.prototype.parsePageDetail = function (pageDetails) {
     console.log(pageDetails);
     //parse here the page details
-    var name = document.createElement("div");
-    var nameTxt = document.createTextNode(pageDetails.name);
-    name.appendChild(nameTxt);
-    var categ = document.createElement("div");
-    var categTxt = document.createTextNode(pageDetails.category);
-    categ.appendChild(categTxt);
-    var divC = document.createElement("div");
-    var likes = document.createElement("div");
-    var likesTxt = document.createTextNode(pageDetails.likes);
     
-    var waitDivBox = document.createElement('div');
+   
+    var name = this.ne.createNewDiv("headerInfoBox");
+    var nameP = this.ne.createNewP();
+    var nameTxt = this.ne.createText(pageDetails.name);
+    nameP.appendChild(nameTxt)
+    name.appendChild( nameP );
+    var categP = this.ne.createNewP();
+    var categTxt = this.ne.createText('category:'+pageDetails.category);
+    categP.appendChild(categTxt);
+    name.appendChild(categP);
+    
+    var divC = this.ne.createNewDiv("headerInfoWrapper");
+   
+    var likes = this.ne.createNewDiv("headerInfoBox");
+    var likesNum = this.ne.createNewP("bnum");
+    var likesTitle = this.ne.createNewP();
+    var likesTxtHi = this.ne.createText('total Fans:');
+    likesTitle.appendChild(likesTxtHi);
+    var likesTxt = this.ne.createText(pageDetails.likes);
+    likesNum.appendChild(likesTitle);
+    likesNum.appendChild(likesTxt)
+    likes.appendChild(likesNum);
+    
+    var peopleTalkCont = this.ne.createNewDiv("headerInfoBox");
+    var peopleTalkHi = this.ne.createNewP().appendChild(this.ne.createText('People talking about:'));
+    var peopleTalkNum = this.ne.createNewP("bnum") ;
+    var num = this.ne.createText(pageDetails.talking_about_count );
+    peopleTalkNum.appendChild(num);
+    peopleTalkCont.appendChild(peopleTalkHi);
+    peopleTalkCont.appendChild(peopleTalkNum);
+    var waitDivBox = this.ne.createNewDiv();
     waitDivBox.setAttribute('id', 'feed');
-    var waitMsg = document.createTextNode('wait for me');
+    var waitMsg = this.ne.createText('wait for me');
     waitDivBox.appendChild(waitMsg);
     
-    
-    
-    likes.appendChild(likesTxt);
+   
     divC.appendChild(name);
-    divC.appendChild(categ);
+ 
     divC.appendChild(likes);
+    divC.appendChild(peopleTalkCont);
     divC.appendChild(waitDivBox);
-    facebookHelper.getLastFeed(pageDetails.id); 
+    
+    divC.appendChild(this.createNewTabElement());
+    facebookHelper.getLastFeed(pageDetails); 
     $('.bigBoxRight').html(divC);
 } 
 
+/**
+ * 
+ */
 pageControl.prototype.loadPageData = function (kaId,arId) {
     console.log(kaId, arId);
     var pageToken = this.pages[arId];

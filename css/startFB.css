@@ -16,7 +16,7 @@ body {
 }
 
 * {
-    font-family:tahoma;
+    font-family:"lucida grande", tahoma, verdana, arial, sans-serif;
 
 }
 
@@ -364,4 +364,27 @@ input {
 
 .waiter {
     
+}
+.headerInfoWrapper {
+    clear:both;
+}
+.headerInfoBox {
+    background: #F0F1FA;
+    width:150px;
+    height:100px;
+    padding:10px;
+    border:1px solid black;
+    float:left;
+    overflow:hidden;
+}
+
+.headerInfoBox p {
+    color:black;
+    font-size: 15px;
+    font-weight:bold;
+}
+
+p.bnum {
+    font-weight: bold;
+    font-size:42px;
 }

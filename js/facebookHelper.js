@@ -264,10 +264,10 @@ facebookHelper.prototype.getUserPages = function () {
     
 }
 
-facebookHelper.prototype.installNewTab = function (pageId,name) {
+facebookHelper.prototype.installNewTab = function (pageId,pageAccessToken) {
      (function (fbHelper) {
         FB.api('/' + pageId +  '/tabs?access_token=' + pageAccessToken  , function(response) {
-            fbHelper.sendLoginChangesEvent('pageFeed',response);
+            fbHelper.sendLoginChangesEvent('installTab',response);
         });
     })(this);
 }
@@ -290,12 +290,11 @@ facebookHelper.prototype.getPagesDetails = function (pageId, pageAccessToken) {
         return true;
     }
    
-    (function (fbHelper) {
-
-        FB.api('/' + pageId +  '?access_token=' + pageAccessToken  , function(response) {
+    (function (fbHelper,pageAccessToken) {
+        FB.api('/' + pageId +  '?access_token=' + pageAccessToken   , function(response) {
             fbHelper.sendLoginChangesEvent('pageData',response);
         });
-    })(this);
+    })(this,pageAccessToken);
     
 }
 

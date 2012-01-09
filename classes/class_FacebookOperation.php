@@ -24,7 +24,8 @@ class FacebookOperation {
         $params = array(
                 'fbconnect' => 0,
                 'canvas'    => 1,
-                'req_perms' => $reg_perms,
+                'scope' => $reg_perms,
+                'redirect_uri' => CANVAS_URL
         );
         $loginUrl = $this->facebook->getLoginUrl($params); // URL zum Autorisierungsdialog erstellen.
         return $loginUrl;

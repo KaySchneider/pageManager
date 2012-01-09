@@ -29,6 +29,7 @@ $reg->setCSSFiles('startFB.css');
 
 $reg->setJSFiles('jquery-1.6.min.js');
 $reg->setJSFiles('facebookHelper.js');
+$reg->setJSFiles('newElements.js');
 //base css files end here TODO: set this in the config
 /**
  * Hier rendern der Start und End View
