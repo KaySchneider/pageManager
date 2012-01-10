@@ -322,7 +322,7 @@ input {
 
 .bigBoxRight {
     float:left;
-    width:545px;
+    width:745px;
     min-height: 600px;
     border:1px solid black;
     background: white;
@@ -350,11 +350,11 @@ input {
 
 .grid {
     clear: both;
-    width:800px;
+    width:1000px;
     border:1px solid black;
     position:absolute;
     left:50%;
-    margin-left:-400px;
+    margin-left:-500px;
 }
 
 .search input {
@@ -387,4 +387,28 @@ input {
 p.bnum {
     font-weight: bold;
     font-size:42px;
+}
+
+.clear {
+    clear:both;
+}
+.formBox {
+    padding:20px;
+    background: #EDEFF4;
+    border: 1px solid #D8DFEA;
+}
+
+.button {
+    display:block;
+    width: 100px;
+    border: 1px solid #B0EBB5;
+    padding: 10px;
+    background:#80E888;
+    cursor:pointer;
+}
+
+.close {
+    position:relative;
+    float:right;
+    cursor: pointer;
 }

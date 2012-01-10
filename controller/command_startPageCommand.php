@@ -1,13 +1,5 @@
 <?php
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- * Wenn nichts gesetzt ist dann hole die komplette �bersicht!
- *
- * Start Page Command sollte direkt mit der Datensammlung beginnen!
-*/
-
-/*
  * die commands müssen benutzerfreundlicher werden!
  * Es ist wünschenswert wenn ich eine Zentrale Stelle 
  * habe an der ich mir die gewünschten Objekte holen kann

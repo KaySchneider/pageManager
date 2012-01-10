@@ -59,15 +59,21 @@ pageControl.prototype.receiveMessage = function (message) {
     }
 }
 
-
+/**
+ * insert the form to edit the custom tab content
+ */
 pageControl.prototype.addTabCreator = function (data) {
-   var FormControl = this.form.createFormElements();
-   $(".bigBoxRight").append(FormControl);
+    if($('.formBox').length <=0) {  
+        var FormControl = this.form.createFormElements(this.pageId);
+        $(".bigBoxRight").append(FormControl);
+        //after inject this to the document. add some evnts
+        this.form.addEvents();
+    }
 }
 
 pageControl.prototype.showPageFeed = function ( message ) {
     $('#feed');
-    //console.log(message);
+//console.log(message);
 }
 
 pageControl.prototype.showAllTabs = function ( message ) {
@@ -81,7 +87,9 @@ pageControl.prototype.showAllTabs = function ( message ) {
 }
 
 
-
+/**
+ * parse the pagesObject from facebook
+ */
 pageControl.prototype.parsePages = function (message) {
     $('._innerC').html("");
     this.pages = message.data;
@@ -107,6 +115,11 @@ pageControl.prototype.parsePages = function (message) {
         });
     })(this);
 }
+
+/**
+ * add an new custom page tab to an facebook page
+ *
+ */
 pageControl.prototype.createNewTabElement = function (pageId,pageAccessToken) {
     this.pageId = pageId;
     var tab = document.createElement("div");
@@ -166,6 +179,9 @@ pageControl.prototype.parsePageDetail = function (pageDetails) {
  
     divC.appendChild(likes);
     divC.appendChild(peopleTalkCont);
+    //insert clear
+    var clear = this.ne.createNewDiv('clear');
+    divC.appendChild(clear);
     divC.appendChild(waitDivBox);
     divC.appendChild(this.createNewTabElement(pageDetails.id, this.actAccessToken));
     facebookHelper.getLastFeed(pageDetails); 
