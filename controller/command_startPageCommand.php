@@ -16,6 +16,7 @@ class startPageCommand implements command {
     public function execute(Request $request, Response $response) {
         $req = registry::getInstance();
         $req->setJSFiles('tabContentEngine.js');
+        $req->setJSFiles('addPageMenu.js');
         $req->setJSFiles('pageControl.js');
         
         $renderEngine = $req->getView();

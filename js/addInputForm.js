@@ -53,8 +53,18 @@ addInputForm.prototype.addControls = function () {
 }
 
 addInputForm.prototype.createInputArea = function () {
-    var options = [{name:'cols',value:'50'},{name:'rows',value:'10'},
-                   {name:'id',value:'tabContent'}];
+    var options = [{
+        name:'cols',
+        value:'50'
+    },{
+        name:'rows',
+        value:'10'
+    },
+
+    {
+        name:'id',
+        value:'tabContent'
+    }];
     var div = this.ne.createNewEl("textarea", "formInsert",options);
     return div;
 }
@@ -64,13 +74,46 @@ addInputForm.prototype.createInputAreaIsFan = function () {
     
     var label = this.createPText('isFan content:');
     
-    var options = [{name:'cols',value:'50'},{name:'rows',value:'10'},
-                   {name:'id',value:'tabContentisFan'}];
+    var options = [{
+        name:'cols',
+        value:'50'
+    },{
+        name:'rows',
+        value:'10'
+    },
+
+    {
+        name:'id',
+        value:'tabContentisFan'
+    }];
     var div = this.ne.createNewEl("textarea", "formInsert",options);
     
     frame.appendChild(label);
     frame.appendChild(div);
     return frame;
+}
+
+addInputForm.prototype.addDeleteBtn = function () {
+    var buttonLabel = this.createPText('delete tab');
+    var button = this.ne.createNewDiv('button red right');
+    button.setAttribute('id', 'submitTabContent');
+    button.appendChild(buttonLabel);
+    (function(addInObj) {
+        $(button).click(function () {
+            addInObj.deleteTab();
+        });
+    })(this);
+    return button;
+}
+addInputForm.prototype.deleteTab = function () {
+   check = confirm('Are you sure to delete this tab from your page?');
+  // console.log(check);
+   if(check == true) {
+       
+       $.ajax({
+           
+       });
+   }
 }
 
 addInputForm.prototype.addSubmitBtn = function () {
@@ -90,40 +133,46 @@ addInputForm.prototype.checkSendForm = function () {
     //check the fields filled out 
     //check what for fields there are in the form //fangate yes/no
     var fanGate = false;
-    var content = $('#tabContent');
-    var isFanContent = $('.#tabContentIsFan');
-    if(isFanContent.length <= 0 ) {
-        fanGate = true;
+    var content = document.getElementById("tabContent").value;
+    try {
+        var isFanContent = document.getElementById('tabContentisFan').value;
+    
+        if(typeof isFanContent != 'undefined' ) {
+            fanGate = true;
+        }
+    } catch( e) {
+        console.log(e);
+        var isFanContent = null;
     }
     var arguments = new Object();
-    var obj = {'mode':'sd'};
+   
     arguments = {
-                      'mode':'saveContent',
-                      'fanGate':fanGate,
-                      'pageId' : this.pageId,
-                      'content':content.innerHTML,
-                      'isFanContent':isFanContent
-                    };
-                    console.log(arguments);
-     //send the data to the server
-  /*   $.ajax({
-            type: "POST",
-            url: "index.php",
-            data: arguments,
-            dataType:'json',
-            success: function(data)
-            {
-                //set on success the parsed data out of the signed request
-                console.log(data);
-                alert("data saved");
-            }
-        });*/
+        'mode':'saveContent',
+        'fanGate':fanGate,
+        'pageId' : this.pageId,
+        'content':content,
+        'isFanContent':isFanContent
+    };
+    console.log(arguments);
+    //send the data to the server
+    $.ajax({
+        type: "POST",
+        url: "index.php",
+        data: arguments,
+        dataType:'json',
+        success: function(data)
+        {
+            //set on success the parsed data out of the signed request
+            console.log(data);
+            alert("data saved");
+        }
+    });
     
 }
 
 
 addInputForm.prototype.addEvents = function () {
-      (function (addInObj) { 
+    (function (addInObj) { 
         $('._fangate').click(function(){
             console.log(this);
             if(this.value == 'on') {
@@ -135,16 +184,66 @@ addInputForm.prototype.addEvents = function () {
                     console.log(document.getElementById('formOuter'),document.getElementById('submitTabContent'),isFan);
                     var refD = document.getElementById("submitTabContent");
                     refD.parentNode.insertBefore(isFan, refD);
-                    //$('.formBox').append(isFan);
+                //$('.formBox').append(isFan);
                 }
             } else if (this.value == 'off') {
                 $('._isFanTxtAr').remove();
             }
         }); 
-     })(this);
+    })(this);
+}
+
+addInputForm.prototype.getPageContent = function () {
+    /**
+     * TODO: add an waiter gif to the form and block the form
+     * while the request is not done!!
+     */
+   
+    console.log("content");
+    (function(adIarg){
+        var arguments = {
+        'mode':'getPageTabContent',
+        'pageId' : adIarg.pageId
+        };
+        $.ajax({
+            type: "POST",
+            url: "index.php",
+            data: arguments,
+            dataType:'json',
+            success: function(data)
+            {
+                console.log("data",data,this);
+                //set on success the parsed data out of the signed request
+                if(typeof data.error == 'undefined'  || typeof data.error == undefined)  {
+                    console.log(data,"result");
+                    adIarg.parsePageContentInject(data);
+                }
+            }
+        });
+      })(this);
+}
+
+addInputForm.prototype.parsePageContentInject = function (data) {
+    console.log(data , "result" );
+    //prepare the form elements for the new input field
+    if(data.fanGate == true && data.isFanContent != 'null') {
+       var isFan = this.createInputAreaIsFan();
+        console.log(document.getElementById('formOuter'),document.getElementById('submitTabContent'),isFan);
+        var refD = document.getElementById("submitTabContent");
+        refD.parentNode.insertBefore(isFan, refD);
+        document.getElementById('tabContentisFan').value = data.isFanContent;
+    }
+    
+    //add here the values if there were any values into the form
+    if(data.content != null) {
+        document.getElementById('tabContent').value = data.content;
+    }
 }
 
 addInputForm.prototype.createFormElements = function (pageId) {
+    this.pageId = pageId;
+    
+    console.log("buh");
     var OuterBox = this.createOuterBox();
     
     var sectionControls = this.addControls();
@@ -152,11 +251,14 @@ addInputForm.prototype.createFormElements = function (pageId) {
     var textBox = this.createInputArea();
     
     var subBtn = this.addSubmitBtn();
+    var deleteBtn = this.addDeleteBtn();
     
     OuterBox.appendChild(FormEl);
-    FormEl.appendChild(sectionControls);
+    FormEl.appendChild(sectionControls);    
     FormEl.appendChild(textBox);
     FormEl.appendChild(subBtn);
+     FormEl.appendChild(deleteBtn);
+    this.getPageContent();
     return OuterBox;
 }
 

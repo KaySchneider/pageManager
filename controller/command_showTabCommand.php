@@ -34,9 +34,28 @@ class showTabCommand implements command {
         //check if the accessToken is in the request
         //load here the pages for the id
         if(isset($parsedRequest['page']) ) {
-            $view = $req->getView();
-            $render->renderView();
-            $view->assign('content', $render->getHtml());
+            $page = new tabContent($parsedRequest['page']['id']);
+            $PageArr = $page->getPageTab();
+          
+            /**
+             *check here if the FanGate is active 
+             */
+            if($PageArr['fangate'] === true) {
+                if($parsedRequest['page']['liked'] === false) {
+                    //show no fan content
+                    $content = $PageArr['content'];
+                } else {
+                    //isFan
+                    $content = $PageArr['contentIsFan'];
+                }
+            } else {
+                $content = $PageArr['content'];
+            }
+            $view = new render("showTab");
+            $view->assign('content', $content);
+           // $render->renderView();
+           // $view->assign('content', $render->getHtml());
+            $req->setView($view);
         }
         
     }

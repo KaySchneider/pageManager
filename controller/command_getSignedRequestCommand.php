@@ -31,7 +31,7 @@ class getSignedRequestCommand implements command {
         $facebook = facebookFactory::getInstance();
         $fbObject = $facebook->getFacebook();
         $fbWorker = new FacebookOperation($fbObject);
-        $parsedRequest = $fbObject->getSignedReques();
+        $parsedRequest = $fbObject->getSignedRequest();
         echo json_encode($parsedRequest);
         die();
     }

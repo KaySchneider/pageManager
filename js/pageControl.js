@@ -9,6 +9,7 @@ var pageControl = function () {
     this.waitImg = img;
     this.ne = new newElements();
     this.form = new addInputForm();
+    this.menu = new addPageMenu();
     facebookHelper.registForLoginChange(this,'receiveMessage');
     
 }
@@ -63,6 +64,63 @@ pageControl.prototype.receiveMessage = function (message) {
  * insert the form to edit the custom tab content
  */
 pageControl.prototype.addTabCreator = function (data) {
+    /**
+     * check at first if our tab is in the data
+     */
+    (function(pcObj){
+        pcObj.TabisInstalled = undefined;
+        $(data.data).each(function (item,value) {
+            //is our Tab there ?
+            console.log(value);
+            if(typeof value.application != 'undefined' && value.application != null) {
+                if(value.application.id == appId) {
+                    //the tab is an pageTab of this app
+                    console.log(value);
+                    $('#addNewPageTab').remove();//remove the new pageTab button
+                    var Outer = pcObj.ne.createNewEl('div');
+                    var inner = pcObj.ne.createNewDiv();
+                    if(typeof value.custom_name == "undefined" || value.custom_name == 'iframe_canvas' ) {
+                        value.custom_name = value.name;
+                    }
+                    var txtInner = pcObj.ne.createText(value.custom_name);
+                    inner.appendChild(txtInner);
+                    Outer.appendChild(inner);
+                 
+                    //refresh the menu and print the new values
+                    
+                    pcObj.TabisInstalled = true;
+                    //add the edit Me icon to the top Menue
+                    var likes = pcObj.ne.createNewDiv("headerInfoBox");
+                    var likesNum = pcObj.ne.createText("edit custom tab:" );
+                    likes.appendChild(likesNum);
+                    likes.appendChild(inner);
+                    var refD = document.getElementsByClassName("clear");
+                    refD[0].parentNode.insertBefore(likes, refD[0]);
+                    $(likes).click(function () {
+                        console.log(pcObj);
+                        pcObj.EditPageTab();
+                    });
+                //todo:remove the force load! But for this time 
+                //this is an must have because nobody used it
+                    
+                }
+            }
+        });
+        
+        if(typeof pcObj.TabisInstalled == 'undefined' ) {
+            //
+            var TopContent = pcObj.createNewTabElement(pcObj.pageId,pcObj.actAccessToken);
+            var refD = document.getElementsByClassName("clear");
+            refD[0].parentNode.insertBefore(TopContent, refD[0]);
+        }
+    })(this);
+    
+}
+
+/**
+ *  shows the pageTab edit form window
+ */
+pageControl.prototype.EditPageTab = function () {
     if($('.formBox').length <=0) {  
         var FormControl = this.form.createFormElements(this.pageId);
         $(".bigBoxRight").append(FormControl);
@@ -123,7 +181,8 @@ pageControl.prototype.parsePages = function (message) {
 pageControl.prototype.createNewTabElement = function (pageId,pageAccessToken) {
     this.pageId = pageId;
     var tab = document.createElement("div");
-    var TabTxt = document.createTextNode("add new Page Tab");
+    tab.setAttribute('id','addNewPageTab');
+    var TabTxt = document.createTextNode("+ add new Page Tab");
     (function (pcObj,tab){
         
         $(tab).click(function () {
@@ -137,6 +196,9 @@ pageControl.prototype.createNewTabElement = function (pageId,pageAccessToken) {
     
 }
 pageControl.prototype.parsePageDetail = function (pageDetails) {
+    //call all the tabs
+    console.log(this.pageId);
+    facebookHelper.receiveAllTabs(this.pageId,this.actAccessToken);
     //console.log(pageDetails);
     //parse here the page details
     
@@ -166,13 +228,16 @@ pageControl.prototype.parsePageDetail = function (pageDetails) {
     var peopleTalkHi = this.ne.createNewP().appendChild(this.ne.createText('People talking about:'));
     var peopleTalkNum = this.ne.createNewP("bnum") ;
     var num = this.ne.createText(pageDetails.talking_about_count );
+    
+    
     peopleTalkNum.appendChild(num);
     peopleTalkCont.appendChild(peopleTalkHi);
     peopleTalkCont.appendChild(peopleTalkNum);
     var waitDivBox = this.ne.createNewDiv();
-    waitDivBox.setAttribute('id', 'feed');
-    var waitMsg = this.ne.createText('wait for me');
-    waitDivBox.appendChild(waitMsg);
+    //waitDivBox.setAttribute('id', 'feed');
+    // var waitMsg = this.ne.createText('wait for me');
+    //waitDivBox.appendChild(waitMsg);
+    
     
    
     divC.appendChild(name);
@@ -182,16 +247,26 @@ pageControl.prototype.parsePageDetail = function (pageDetails) {
     //insert clear
     var clear = this.ne.createNewDiv('clear');
     divC.appendChild(clear);
-    divC.appendChild(waitDivBox);
-    divC.appendChild(this.createNewTabElement(pageDetails.id, this.actAccessToken));
-    facebookHelper.getLastFeed(pageDetails); 
+    //divC.appendChild(waitDivBox);
+
+    //facebookHelper.getLastFeed(pageDetails); 
     $('.bigBoxRight').html(divC);
+    this.menu.init({
+        id:pageDetails.id
+    });
+  
+    //  var men = this.createNewTabElement(pageDetails.id,this.actAccessToken);
+    //receive all the menuItems
+    //this.menu.addMenuItem(men);
+    this.menu.writeMenuItem();
+
 } 
 
 /**
  * 
  */
 pageControl.prototype.loadPageData = function (kaId,arId) {
+    this.pageId = kaId;
     var pageToken = this.pages[arId];
     this.actAccessToken = pageToken.access_token;
     $('.bigBoxRight').append( this.getWait('bigBoxRight') );

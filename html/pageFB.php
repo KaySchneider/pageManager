@@ -10,7 +10,7 @@
       xmlns:fb="http://www.facebook.com/2008/fbml" >
    <head>
 <?php
-print $this->addMetaTags();
+    print $this->addMetaTags();
 ?>
       <title><?php print $this->addHeaderInfo(); ?></title>
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -55,7 +55,11 @@ print $this->addMetaTags();
         var pageControlObj;
         $('document').ready(function() {
             //make an instance of the Object pageControl in the file js/pageControl.js
-            pageControlObj = new pageControl();
+            try {
+                pageControlObj = new pageControl();
+            } catch(e) {
+                console.log(e,"ERRRO");
+            }
         });
         
         /**

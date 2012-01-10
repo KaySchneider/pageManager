@@ -100,6 +100,16 @@ class FacebookOperation {
         }
     }
     
+    public function getPageInfo($pageId,$pageAccessToken) {
+        try {
+            $user = $this->facebook->api('/'.$pageId. '/?access_token='. $pageAccessToken);
+            return $user;
+        } catch(FacebookApiException $e) {
+            $e;
+            return false;
+        }
+    }
+    
     public function getUser($userId) {
         try {
             $user = $this->facebook->api('/'.$userId);

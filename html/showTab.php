@@ -1,15 +1,13 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:og="http://opengraphprotocol.org/schema/"
+      xmlns:fb="http://www.facebook.com/2008/fbml" >
+<head>
+<body>
 <?php
-/**
- * start here with the page Layout! For the overview... 
- * loads all the "big" boxes and load it then via javascript!s 
- */
+ 
+        print $this->vars['content'];
+
 ?>
-
-<div class="grid" >
-
-</div> 
-
-
-<script language="text/javascript" >
-       
-</script>
+</body>
+</html>

@@ -396,6 +396,8 @@ p.bnum {
     padding:20px;
     background: #EDEFF4;
     border: 1px solid #D8DFEA;
+    z-index: 1000;
+    float:right;
 }
 
 .button {
@@ -405,10 +407,31 @@ p.bnum {
     padding: 10px;
     background:#80E888;
     cursor:pointer;
+    float:left;
+}
+
+.red {
+    background: #FA4848 !important;
+} 
+.right {
+    float:right;
 }
 
 .close {
     position:relative;
     float:right;
+    cursor: pointer;
+}
+
+.leftMen {
+    width:100px;
+    float:left;
+    padding:15px;
+    border:1px solid blue;
+}
+
+.leftMen div {
+    font-size:10px;
+    font-weight: bold;
     cursor: pointer;
 }
