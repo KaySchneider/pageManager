@@ -32,20 +32,20 @@ class facebookUser implements filter {
         }
       
         define("USER_LOCALE", $signedRequest['locale']);
-       
-      
-        /**
-         * Prüfen ob der Nutzer die Benötigten Rechte besitzt
-         * Keine Rechte, die Rechte holen Nutzer anlegen!
-         */
-        $userIdFF = $fbWorker->getFB_userId();
-        if( empty($userIdFF)) {
-            eventDispatcher::getInstance()->triggerEvent('onFBUserNoRights');
-        } else {
-            $user = new user($userIdFF);
-            $reg->setUser($user);
-        }
-        
+       //ask only if we arent on an pageTab
+      if(! isset($signedRequest['page']) ) {
+            /**
+            * Prüfen ob der Nutzer die Benötigten Rechte besitzt
+            * Keine Rechte, die Rechte holen Nutzer anlegen!
+            */
+            $userIdFF = $fbWorker->getFB_userId();
+            if( empty($userIdFF)) {
+                eventDispatcher::getInstance()->triggerEvent('onFBUserNoRights');
+            } else {
+                $user = new user($userIdFF);
+                $reg->setUser($user);
+            }
+      }
         /**
          * Wenn bis hier dann ist alles OK! nun Prüfen ob der Nutzer zum ersten mal bei uns
          * angelangt ist! wenn ja dann Nutzer anlegen!

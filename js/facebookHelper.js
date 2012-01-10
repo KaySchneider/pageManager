@@ -264,11 +264,31 @@ facebookHelper.prototype.getUserPages = function () {
     
 }
 
+facebookHelper.prototype.receiveAllTabs = function (pageId,pageAccessToken) {
+     (function (fbHelper) {
+        FB.api('/' + pageId +  '/tabs?access_token=' + pageAccessToken , function(response) {
+            fbHelper.sendLoginChangesEvent('receiveTabs',response);
+        });
+    })(this);
+}
+
 facebookHelper.prototype.installNewTab = function (pageId,pageAccessToken) {
      (function (fbHelper) {
-        FB.api('/' + pageId +  '/tabs?access_token=' + pageAccessToken  , function(response) {
-            fbHelper.sendLoginChangesEvent('installTab',response);
+         console.log(pageId,pageAccessToken);
+        $.ajax({
+            type: "POST",
+            url: "https://graph.facebook.com/"+pageId+"/tabs?access_token=" + pageAccessToken + "&app_id="+ appId +"&method=POST&",
+        //    data: dataString,
+         //   dataType:'json',
+            success: function(data)
+            {
+                //set on success the parsed data out of the signed request
+               fbHelper.sendLoginChangesEvent('installTab',data);
+            }
         });
+       /* FB.api('/' + pageId +  '/tabs?access_token=' + pageAccessToken ,'post', { 'app_id': appId } ,function(response) {
+            fbHelper.sendLoginChangesEvent('installTab',response);
+        });*/
     })(this);
 }
 
@@ -339,7 +359,4 @@ facebookHelper.prototype.getAccessToken = function () {
     return this.accessToken;
 }
 
-
 facebookHelper = new facebookHelper(['facebookHelper']);
-
-

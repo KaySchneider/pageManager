@@ -1,11 +1,7 @@
 <?php
-
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
- * 
- *
- * 
  */
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
@@ -26,10 +22,10 @@ $reg = registry::getInstance();
 $reg->setCSSFiles('fbstyles.css');
 $reg->setCSSFiles('detailFB.css');
 $reg->setCSSFiles('startFB.css');
-
 $reg->setJSFiles('jquery-1.6.min.js');
 $reg->setJSFiles('facebookHelper.js');
 $reg->setJSFiles('newElements.js');
+$reg->setJSFiles('addInputForm.js');
 //base css files end here TODO: set this in the config
 /**
  * Hier rendern der Start und End View

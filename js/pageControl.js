@@ -2,11 +2,13 @@ var pageControl = function () {
     (function (pageObj) {
         userEnsureInitObj(pageObj,"init");    
     })(this);
+    this.actAccessToken = null;
     this.signedRequest = null;
     var img = new Image();
     img.src = 'img/waiting.gif'
     this.waitImg = img;
     this.ne = new newElements();
+    this.form = new addInputForm();
     facebookHelper.registForLoginChange(this,'receiveMessage');
     
 }
@@ -21,9 +23,6 @@ pageControl.prototype = new baseMethod(['pageControlObj']);
  * start the pageControl first when the facebook sdk is loaded
  */
 pageControl.prototype.init = function () {
-
-  
-   
     this.getSignedRequest();
     this.addEvents();
     this.loadDefaultContent();
@@ -54,18 +53,36 @@ pageControl.prototype.receiveMessage = function (message) {
         this.showPageFeed(message.data);
     }
     else if( message.message == 'installTab') {
-        console.log(message );
+        this.showAllTabs(message.data);
+    } else if (message.message == 'receiveTabs') {
+        this.addTabCreator(message.data);
     }
+}
+
+
+pageControl.prototype.addTabCreator = function (data) {
+   var FormControl = this.form.createFormElements();
+   $(".bigBoxRight").append(FormControl);
 }
 
 pageControl.prototype.showPageFeed = function ( message ) {
     $('#feed');
-    console.log(message);
+    //console.log(message);
+}
+
+pageControl.prototype.showAllTabs = function ( message ) {
+    if(message == true || message == 'true') {
+        console.log(message);
+        //reload all the tabs of the page
+        facebookHelper.receiveAllTabs(this.pageId,this.actAccessToken);
+    } else {
+        alert("installation of custom tab failed! Try again");
+    }
 }
 
 
+
 pageControl.prototype.parsePages = function (message) {
-    console.log(message, 'PARSEPAGES');
     $('._innerC').html("");
     this.pages = message.data;
     /**
@@ -74,33 +91,30 @@ pageControl.prototype.parsePages = function (message) {
     (function (Objpages){
         
         $(Objpages.pages).each(function ( value, item ) {
-            console.log(value,item, 'BUH');
             var Insert = $('._innerC');
             var div = document.createElement('div');
             var p = document.createElement('p');
             var txt = document.createTextNode(item.name);
             p.setAttribute('kaid' , item.id );
-            p.setAttribute('arid' , item.id );
+            p.setAttribute('arid' , value );
             p.appendChild(txt);
             div.appendChild(p);
             Insert.append(div);
-
         });
         
         $('.menLeft div p').click(function () {
-            console.log(this);
             Objpages.loadPageData(this.getAttribute('kaid'), this.getAttribute('arid'));
         });
     })(this);
 }
-pageControl.prototype.createNewTabElement = function (pageId) {
+pageControl.prototype.createNewTabElement = function (pageId,pageAccessToken) {
     this.pageId = pageId;
     var tab = document.createElement("div");
     var TabTxt = document.createTextNode("add new Page Tab");
     (function (pcObj,tab){
         
         $(tab).click(function () {
-            facebookHelper.installNewTab(pcObj.pageId);
+            facebookHelper.installNewTab(pcObj.pageId,pageAccessToken);
         });
         
     })(this,tab);
@@ -110,10 +124,9 @@ pageControl.prototype.createNewTabElement = function (pageId) {
     
 }
 pageControl.prototype.parsePageDetail = function (pageDetails) {
-    console.log(pageDetails);
+    //console.log(pageDetails);
     //parse here the page details
     
-   
     var name = this.ne.createNewDiv("headerInfoBox");
     var nameP = this.ne.createNewP();
     var nameTxt = this.ne.createText(pageDetails.name);
@@ -154,8 +167,7 @@ pageControl.prototype.parsePageDetail = function (pageDetails) {
     divC.appendChild(likes);
     divC.appendChild(peopleTalkCont);
     divC.appendChild(waitDivBox);
-    
-    divC.appendChild(this.createNewTabElement());
+    divC.appendChild(this.createNewTabElement(pageDetails.id, this.actAccessToken));
     facebookHelper.getLastFeed(pageDetails); 
     $('.bigBoxRight').html(divC);
 } 
@@ -164,11 +176,10 @@ pageControl.prototype.parsePageDetail = function (pageDetails) {
  * 
  */
 pageControl.prototype.loadPageData = function (kaId,arId) {
-    console.log(kaId, arId);
     var pageToken = this.pages[arId];
+    this.actAccessToken = pageToken.access_token;
     $('.bigBoxRight').append( this.getWait('bigBoxRight') );
-    facebookHelper.getPagesDetails(kaId,pageToken);
-    
+    facebookHelper.getPagesDetails(kaId,pageToken.access_token);
 };
  
 /**
@@ -227,6 +238,8 @@ pageControl.prototype.showError = function (errorArr) {
         $('#error').append(errorElement);
     }
 }
+
+
 
 /**
  *add some events to the page

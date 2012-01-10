@@ -380,5 +380,89 @@ class FacebookOperation {
           return FALSE;
        }
     }
+    /*     * **
+     * section for fancy facebook stuff....
+     * this is realy exciting!
+     */
+
+    /**
+     * subscribe to realtime updates
+     */
+    private function getAppAccessToken() {
+        define('POSTURL', 'https://graph.facebook.com/oauth/access_token');
+        define('POSTVARS', "client_id=" . APP_ID . "&client_secret=" . APP_SECRET . "&grant_type=client_credentials");  // POST VARIABLES TO BE SENT
+        // INITIALIZE ALL VARS
+        $ch = '';
+        $Rec_Data = '';
+
+        $ch = curl_init(POSTURL);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, POSTVARS);
+        //curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1); 
+        curl_setopt($ch, CURLOPT_HEADER, 0);  // DO NOT RETURN HTTP HEADERS 
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);  // RETURN THE CONTENTS OF THE CALL
+        $Rec_Data = curl_exec($ch);
+
+
+        $accessToken = explode("access_token=", $Rec_Data);
+        return $accessToken[1];
+    }
+    
+    /**
+     * installs an new tab with an application to an 
+     * Facebook page
+     * @param Varchar $pageId //the id of an facebook page
+     * @param type $pageAccessToken //an access token for an page.. given by the administrator
+     * @return \FacebookApiException|boolean 
+     */
+    public function addNewPageTab($pageId, $pageAccessToken) {
+        try {
+            //search?type=checkin
+            $param = array('access_token' => $pageAccessToken,
+                'app_id' => APP_ID,
+            );
+            $subs = $this->facebook->api('/' . $pageId . '/tabs', 'POST', $param);
+            //$searchResult = $this->facebook->api('/search?type='.$searchField.'&access_token='.$this->facebook->getAccessToken());
+            return $subs;
+        } catch (FacebookApiException $e) {
+            return $e;
+            return FALSE;
+        }
+    }
+
+    /**
+     *
+     * @param string $fileds (name, picture, checkins)
+     * @param type $object  ( user)
+     */
+    public function addRealtimeUpdate($fileds, $object, $callback) {
+        try {
+            //search?type=checkin
+            $param = array('access_token' => $this->getAppAccessToken(),
+                'object' => $object,
+                'fields' => $fileds,
+                'callback_url' => $callback,
+                'verify_token' => VTOKEN
+            );
+            $subs = $this->facebook->api('/' . APP_ID . '/subscriptions', 'POST', $param);
+            //$searchResult = $this->facebook->api('/search?type='.$searchField.'&access_token='.$this->facebook->getAccessToken());
+            return $subs;
+        } catch (FacebookApiException $e) {
+            return $e;
+            return FALSE;
+        }
+    }
+
+    public function readRealtimeUpdate() {
+        try {
+            $param = array('access_token' => $this->getAppAccessToken());
+            $subs = $this->facebook->api('/' . APP_ID . '/subscriptions',$param);
+            //$searchResult = $this->facebook->api('/search?type='.$searchField.'&access_token='.$this->facebook->getAccessToken());
+            return $subs;
+        } catch (FacebookApiException $e) {
+            return  $e;
+            return FALSE;
+        }
+    }
 }
 ?>
