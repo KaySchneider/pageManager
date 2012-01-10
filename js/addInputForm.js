@@ -93,18 +93,20 @@ addInputForm.prototype.checkSendForm = function () {
     var content = $('#tabContent');
     var isFanContent = $('.#tabContentIsFan');
     if(isFanContent.length <= 0 ) {
-        var fanGate = true;
+        fanGate = true;
     }
-    var arguments = {
+    var arguments = new Object();
+    var obj = {'mode':'sd'};
+    arguments = {
                       'mode':'saveContent',
                       'fanGate':fanGate,
                       'pageId' : this.pageId,
-                      'content':content,
+                      'content':content.innerHTML,
                       'isFanContent':isFanContent
                     };
                     console.log(arguments);
      //send the data to the server
-     $.ajax({
+  /*   $.ajax({
             type: "POST",
             url: "index.php",
             data: arguments,
@@ -115,7 +117,7 @@ addInputForm.prototype.checkSendForm = function () {
                 console.log(data);
                 alert("data saved");
             }
-        });
+        });*/
     
 }
 
