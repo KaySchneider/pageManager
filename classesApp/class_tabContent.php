@@ -68,6 +68,9 @@ class tabContent {
      */
     public function saveDataToDB($fangate, $content, $contentIsFan, $userId) {
         //check if exists
+        if($contentIsFan == 'null') {
+            $contentIsFan = '';
+        }
         if($this->checkIsInDb($this->pageId)) {
            $sql = 'UPDATE  tab 
                     SET content = "'.  mysql_real_escape_string($content).'",

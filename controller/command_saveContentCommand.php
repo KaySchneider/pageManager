@@ -30,11 +30,11 @@ class saveContentCommand implements command {
             $fbWorker = new FacebookOperation($fbObject);
             $isAdmin =  $fbWorker->getPageInfo($request->getParameter('pageId'), $request->getParameter('accessToken'));
             if(!isset($isAdmin['can_post']) || $isAdmin['can_post'] == FALSE) {
-                die();
+               echo json_encode(array('result'=>'ok') );
             }
             $pageId = $request->getParameter('pageId');
             if(empty( $pageId) )
-                die("there was an error");
+                 echo json_encode(array('result'=>'ok') );
             $user = $fbWorker->checkLoginState();
             $userId = $user['user_id'];
         //tabContent
