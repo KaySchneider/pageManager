@@ -114,6 +114,7 @@ pageControl.prototype.addTabCreator = function (data) {
                     pcObj.TabisInstalled = true;
                     //add the edit Me icon to the top Menue
                     var likes = pcObj.ne.createNewDiv("headerInfoBox");
+                    likes.setAttribute('style', 'cursor:pointer');
                     var likesNum = pcObj.ne.createText("edit custom tab:" );
                     likes.appendChild(likesNum);
                     likes.appendChild(inner);
@@ -204,9 +205,10 @@ pageControl.prototype.parsePages = function (message) {
  */
 pageControl.prototype.createNewTabElement = function (pageId,pageAccessToken) {
     this.pageId = pageId;
-    
-    var tab = document.createElement("div");
+    var tab = this.ne.createNewDiv("headerInfoBox");
+    //var tab = document.createElement("div");
     tab.setAttribute('id','addNewPageTab');
+    tab.setAttribute('style', 'cursor:pointer' );
     var TabTxt = document.createTextNode("+ add new Page Tab");
     (function (pcObj,tab){
         
