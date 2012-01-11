@@ -149,6 +149,7 @@ pageControl.prototype.showAllTabs = function ( message ) {
  * parse the pagesObject from facebook
  */
 pageControl.prototype.parsePages = function (message) {
+    console.log(message);
     $('._innerC').html("");
     this.pages = message.data;
     /**
