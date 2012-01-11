@@ -254,7 +254,10 @@ pageControl.prototype.parsePageDetail = function (pageDetails) {
     var peopleTalkCont = this.ne.createNewDiv("headerInfoBox");
     var peopleTalkHi = this.ne.createNewP().appendChild(this.ne.createText('People talking about:'));
     var peopleTalkNum = this.ne.createNewP("bnum") ;
-    var num = this.ne.createText(pageDetails.talking_about_count );
+    if(typeof pageDetails.talking_about_count == 'undefined' ) {
+        pageDetails.talking_about_count = 0;
+    }
+    var num = this.ne.createText( pageDetails.talking_about_count );
     
     
     peopleTalkNum.appendChild(num);
