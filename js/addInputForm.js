@@ -106,14 +106,29 @@ addInputForm.prototype.addDeleteBtn = function () {
     return button;
 }
 addInputForm.prototype.deleteTab = function () {
-   check = confirm('Are you sure to delete this tab from your page?');
-  // console.log(check);
-   if(check == true) {
-       
-       $.ajax({
-           
-       });
-   }
+    check = confirm('Are you sure to delete this tab from your page?');
+     console.log(check);
+    if(check == true) {
+        //createNewTabCommand
+        var arguments = {
+            'mode':'createNewTab',
+            'pageId':this.pageId, 
+            'tabId': this.tabId,
+            'pageAccessToken':this.accessToken
+            };
+        $.ajax({
+            type: "POST",
+            url: "index.php",
+            data: arguments,
+            dataType:'json',
+            success: function(data)
+            {
+                //set on success the parsed data out of the signed request
+                console.log(data);
+                alert("data saved");
+            }
+        });
+    }
 }
 
 addInputForm.prototype.addSubmitBtn = function () {
@@ -202,8 +217,8 @@ addInputForm.prototype.getPageContent = function () {
     console.log("content");
     (function(adIarg){
         var arguments = {
-        'mode':'getPageTabContent',
-        'pageId' : adIarg.pageId
+            'mode':'getPageTabContent',
+            'pageId' : adIarg.pageId
         };
         $.ajax({
             type: "POST",
@@ -220,14 +235,14 @@ addInputForm.prototype.getPageContent = function () {
                 }
             }
         });
-      })(this);
+    })(this);
 }
 
 addInputForm.prototype.parsePageContentInject = function (data) {
     console.log(data , "result" );
     //prepare the form elements for the new input field
     if(data.fanGate == true && data.isFanContent != 'null') {
-       var isFan = this.createInputAreaIsFan();
+        var isFan = this.createInputAreaIsFan();
         console.log(document.getElementById('formOuter'),document.getElementById('submitTabContent'),isFan);
         var refD = document.getElementById("submitTabContent");
         refD.parentNode.insertBefore(isFan, refD);
@@ -240,10 +255,11 @@ addInputForm.prototype.parsePageContentInject = function (data) {
     }
 }
 
-addInputForm.prototype.createFormElements = function (pageId) {
+addInputForm.prototype.createFormElements = function (pageId,accessToken,tabId) {
     this.pageId = pageId;
+    this.accessToken = accessToken;
+    this.tabId = tabId;
     
-    console.log("buh");
     var OuterBox = this.createOuterBox();
     
     var sectionControls = this.addControls();
@@ -252,12 +268,13 @@ addInputForm.prototype.createFormElements = function (pageId) {
     
     var subBtn = this.addSubmitBtn();
     var deleteBtn = this.addDeleteBtn();
-    
+    var clearer = this.ne.createNewDiv('clearDiv');
     OuterBox.appendChild(FormEl);
     FormEl.appendChild(sectionControls);    
     FormEl.appendChild(textBox);
+    FormEl.appendChild(clearer);
     FormEl.appendChild(subBtn);
-     FormEl.appendChild(deleteBtn);
+    FormEl.appendChild(deleteBtn);
     this.getPageContent();
     return OuterBox;
 }

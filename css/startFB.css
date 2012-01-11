@@ -435,3 +435,6 @@ p.bnum {
     font-weight: bold;
     cursor: pointer;
 }
+.clearDiv {
+    clear:both;
+}

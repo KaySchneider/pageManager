@@ -87,7 +87,7 @@ pageControl.prototype.addTabCreator = function (data) {
                     Outer.appendChild(inner);
                  
                     //refresh the menu and print the new values
-                    
+                    pcObj.tabId = value.id;
                     pcObj.TabisInstalled = true;
                     //add the edit Me icon to the top Menue
                     var likes = pcObj.ne.createNewDiv("headerInfoBox");
@@ -122,7 +122,7 @@ pageControl.prototype.addTabCreator = function (data) {
  */
 pageControl.prototype.EditPageTab = function () {
     if($('.formBox').length <=0) {  
-        var FormControl = this.form.createFormElements(this.pageId);
+        var FormControl = this.form.createFormElements(this.pageId, this.actAccessToken,this.tabId);
         $(".bigBoxRight").append(FormControl);
         //after inject this to the document. add some evnts
         this.form.addEvents();
@@ -180,6 +180,7 @@ pageControl.prototype.parsePages = function (message) {
  */
 pageControl.prototype.createNewTabElement = function (pageId,pageAccessToken) {
     this.pageId = pageId;
+    
     var tab = document.createElement("div");
     tab.setAttribute('id','addNewPageTab');
     var TabTxt = document.createTextNode("+ add new Page Tab");

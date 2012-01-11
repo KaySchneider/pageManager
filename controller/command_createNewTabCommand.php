@@ -29,11 +29,11 @@ class createNewTabCommand implements command {
         $facebook = facebookFactory::getInstance();
         $fbObject = $facebook->getFacebook();
         $fbWorker = new FacebookOperation($fbObject);
-        $parsedRequest = $fbObject->getSignedReques();
+        $parsedRequest = $fbObject->getSignedRequest();
         //check if the accessToken is in the request
-        if(! $request->issetParameter('pageAccessToken')) {
-            die("error:No accessToken");
-        }
+        //send the deleteRequest
+        $fbWorker->deletePage($request->getParameter('pageId'), $request->getParameter('tabId') ,$request->getParameter('pageAccessToken'));
+        die("ok");
         
     }
 
