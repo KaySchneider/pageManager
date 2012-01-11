@@ -40,7 +40,8 @@ class saveContentCommand implements command {
         //tabContent
         $tabContent = new tabContent($pageId);
         $tabContent->saveDataToDB($request->getParameter('fanGate'), $request->getParameter('content'), $request->getParameter('isFanContent'), $userId);
-        die("ok");
+        echo json_encode(array('result'=>'ok') );
+        die();
         }
 
 }

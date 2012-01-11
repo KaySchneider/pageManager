@@ -38,6 +38,7 @@ addInputForm.prototype.createPText = function (textx) {
     
 }
 
+
 /**
  * add some controls to the form
  */
@@ -70,6 +71,7 @@ addInputForm.prototype.createInputArea = function () {
 }
 
 addInputForm.prototype.createInputAreaIsFan = function () {
+   
     var frame = this.ne.createNewDiv("_isFanTxtAr");
     
     var label = this.createPText('isFan content:');
@@ -107,9 +109,10 @@ addInputForm.prototype.addDeleteBtn = function () {
 }
 addInputForm.prototype.deleteTab = function () {
     check = confirm('Are you sure to delete this tab from your page?');
-     console.log(check);
+
     if(check == true) {
         //createNewTabCommand
+        pageControlObj.addWaitScreen();
         var arguments = {
             'mode':'createNewTab',
             'pageId':this.pageId, 
@@ -123,9 +126,10 @@ addInputForm.prototype.deleteTab = function () {
             dataType:'json',
             success: function(data)
             {
-                //set on success the parsed data out of the signed request
-                console.log(data);
-                alert("data saved");
+              
+          
+                //reload everything after delete the content
+                facebookHelper.getPagesDetails(pageControlObj.pageId,pageControlObj.actAccessToken );
             }
         });
     }
@@ -147,6 +151,7 @@ addInputForm.prototype.addSubmitBtn = function () {
 addInputForm.prototype.checkSendForm = function () {
     //check the fields filled out 
     //check what for fields there are in the form //fangate yes/no
+    
     var fanGate = false;
     var content = document.getElementById("tabContent").value;
     try {
@@ -160,7 +165,8 @@ addInputForm.prototype.checkSendForm = function () {
         var isFanContent = null;
     }
     var arguments = new Object();
-   
+   //show wait screen
+   pageControlObj.addWaitScreen();
     arguments = {
         'mode':'saveContent',
         'fanGate':fanGate,
@@ -179,7 +185,7 @@ addInputForm.prototype.checkSendForm = function () {
         {
             //set on success the parsed data out of the signed request
             console.log(data);
-            alert("data saved");
+            pageControlObj.removeWaitScreen();
         }
     });
     
@@ -214,7 +220,6 @@ addInputForm.prototype.getPageContent = function () {
      * while the request is not done!!
      */
    
-    console.log("content");
     (function(adIarg){
         var arguments = {
             'mode':'getPageTabContent',
@@ -227,12 +232,13 @@ addInputForm.prototype.getPageContent = function () {
             dataType:'json',
             success: function(data)
             {
-                console.log("data",data,this);
+          
                 //set on success the parsed data out of the signed request
                 if(typeof data.error == 'undefined'  || typeof data.error == undefined)  {
-                    console.log(data,"result");
+         
                     adIarg.parsePageContentInject(data);
                 }
+                pageControlObj.removeWaitScreen();
             }
         });
     })(this);
@@ -256,6 +262,8 @@ addInputForm.prototype.parsePageContentInject = function (data) {
 }
 
 addInputForm.prototype.createFormElements = function (pageId,accessToken,tabId) {
+     //add wait screen
+    pageControlObj.addWaitScreen();
     this.pageId = pageId;
     this.accessToken = accessToken;
     this.tabId = tabId;

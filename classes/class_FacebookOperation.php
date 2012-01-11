@@ -124,7 +124,7 @@ class FacebookOperation {
             );
 
             $user = $this->facebook->api('/' . $tabId . '?access_token=' . $pageAccessToken, 'delete', $object);
-            var_dump($pageId, $pageAccessToken);
+            
             return $user;
         } catch (FacebookApiException $e) {
             $e;

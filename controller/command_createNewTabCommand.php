@@ -33,7 +33,8 @@ class createNewTabCommand implements command {
         //check if the accessToken is in the request
         //send the deleteRequest
         $fbWorker->deletePage($request->getParameter('pageId'), $request->getParameter('tabId') ,$request->getParameter('pageAccessToken'));
-        die("ok");
+        echo json_encode( array('result'=>'ok') );
+        die();
         
     }
 

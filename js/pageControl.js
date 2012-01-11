@@ -43,6 +43,29 @@ pageControl.prototype.UserPages = function () {
 }
 
 /**
+ * add wait screen
+ **/
+pageControl.prototype.addWaitScreen = function () {
+    var options = {"id": "waitOv","ka":"w"};
+
+    var waitOverlay = this.ne.createNewEl('div','waitOverlay', options);
+    var waiter = this.getWait('waitOverlayGif');
+    waiter.setAttribute('style','margin-left:50%;margin-top:50px;z-index:2000');
+    waitOverlay.appendChild(waiter);
+    var appEl  = document.getElementsByClassName('bigBoxRight');
+    appEl[0].appendChild(waitOverlay);
+}
+
+/**
+ * remoce wait screen
+ **/
+pageControl.prototype.removeWaitScreen = function () {
+  
+    $('.waitOverlay').remove();
+    console.log('remove');
+}
+
+/**
  * receive user data
  */
 pageControl.prototype.receiveMessage = function (message) {
@@ -261,6 +284,7 @@ pageControl.prototype.parsePageDetail = function (pageDetails) {
     //receive all the menuItems
     //this.menu.addMenuItem(men);
     this.menu.writeMenuItem();
+    this.removeWaitScreen();
 
 } 
 
@@ -272,6 +296,8 @@ pageControl.prototype.loadPageData = function (kaId,arId) {
     var pageToken = this.pages[arId];
     this.actAccessToken = pageToken.access_token;
     $('.bigBoxRight').append( this.getWait('bigBoxRight') );
+    //start wait screen
+    this.addWaitScreen();
     facebookHelper.getPagesDetails(kaId,pageToken.access_token);
 };
  
