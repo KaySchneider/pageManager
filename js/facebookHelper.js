@@ -277,7 +277,7 @@ facebookHelper.prototype.installNewTab = function (pageId,pageAccessToken) {
          console.log(pageId,pageAccessToken);
         $.ajax({
             type: "POST",
-            url: "https://graph.facebook.com/"+pageId+"/tabs?access_token=" + pageAccessToken + "&app_id="+ appId +"&method=POST&",
+            url: "https://graph.facebook.com/"+pageId+"/tabs?access_token=" + pageAccessToken + "&app_id="+ appId +"&method=POST",
         //    data: dataString,
          //   dataType:'json',
             success: function(data)
