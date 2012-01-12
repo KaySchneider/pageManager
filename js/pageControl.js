@@ -98,7 +98,7 @@ pageControl.prototype.addTabCreator = function (data) {
             if(typeof value.application != 'undefined' && value.application != null) {
                 if(value.application.id == appId) {
                     //the tab is an pageTab of this app
-                    console.log(value);
+                    
                     $('#addNewPageTab').remove();//remove the new pageTab button
                     var Outer = pcObj.ne.createNewEl('div');
                     var inner = pcObj.ne.createNewDiv();
@@ -131,12 +131,18 @@ pageControl.prototype.addTabCreator = function (data) {
             }
         });
         
-        if(typeof pcObj.TabisInstalled == 'undefined' ) {
-            //
+        if(typeof pcObj.TabisInstalled == 'undefined' || this.actAccessToken == undefined) {
             var TopContent = pcObj.createNewTabElement(pcObj.pageId,pcObj.actAccessToken);
             var refD = document.getElementsByClassName("clear");
             refD[0].parentNode.insertBefore(TopContent, refD[0]);
+          
+        } else {
+            var TopContent = pcObj.ne.createNewElement("div");
+            var Msg = pcObj.ne.createText("This page isnt supported!");
+            var refD = document.getElementsByClassName("clear");
+            refD[0].parentNode.insertBefore(TopContent, refD[0]);
         }
+        
     })(this);
     
 }
@@ -173,24 +179,28 @@ pageControl.prototype.showAllTabs = function ( message ) {
  * parse the pagesObject from facebook
  */
 pageControl.prototype.parsePages = function (message) {
-    console.log(message);
+   
     $('._innerC').html("");
     this.pages = message.data;
     /**
      * build here the html
      */
     (function (Objpages){
-        
         $(Objpages.pages).each(function ( value, item ) {
-            var Insert = $('._innerC');
-            var div = document.createElement('div');
-            var p = document.createElement('p');
-            var txt = document.createTextNode(item.name);
-            p.setAttribute('kaid' , item.id );
-            p.setAttribute('arid' , value );
-            p.appendChild(txt);
-            div.appendChild(p);
-            Insert.append(div);
+            console.log(item);
+            if(item.category != 'Application' ) {
+                var Insert = $('._innerC');
+                var div = document.createElement('div');
+                var p = document.createElement('p');
+                var txt = document.createTextNode(item.name);
+                //adding here the like button if there is no access_token
+                console.log();
+                p.setAttribute('kaid' , item.id );
+                p.setAttribute('arid' , value );
+                p.appendChild(txt);
+                div.appendChild(p);
+                Insert.append(div);
+            } 
         });
         
         $('.menLeft div p').click(function () {
@@ -205,6 +215,7 @@ pageControl.prototype.parsePages = function (message) {
  */
 pageControl.prototype.createNewTabElement = function (pageId,pageAccessToken) {
     this.pageId = pageId;
+    this.pageAccessToken = pageAccessToken;
     var tab = this.ne.createNewDiv("headerInfoBox");
     //var tab = document.createElement("div");
     tab.setAttribute('id','addNewPageTab');
@@ -213,7 +224,7 @@ pageControl.prototype.createNewTabElement = function (pageId,pageAccessToken) {
     (function (pcObj,tab){
         
         $(tab).click(function () {
-            facebookHelper.installNewTab(pcObj.pageId,pageAccessToken);
+            facebookHelper.installNewTab(pcObj.pageId,pcObj.pageAccessToken);
         });
         
     })(this,tab);
@@ -267,7 +278,16 @@ pageControl.prototype.parsePageDetail = function (pageDetails) {
     //waitDivBox.setAttribute('id', 'feed');
     // var waitMsg = this.ne.createText('wait for me');
     //waitDivBox.appendChild(waitMsg);
-    
+    //check if the access_token is define
+    console.log(pageDetails);
+   if(pageDetails.can_post == undefined || pageDetails.can_post == false) {
+        var likeButton = '<h2>This page cant can edited at this time!</h2>';
+         $('.bigBoxRight').html(likeButton);
+        // FB.XFBML.parse();
+         this.removeWaitScreen();
+         
+         return true;
+    } 
     
    
     divC.appendChild(name);
@@ -278,7 +298,7 @@ pageControl.prototype.parsePageDetail = function (pageDetails) {
     var clear = this.ne.createNewDiv('clear');
     divC.appendChild(clear);
     //divC.appendChild(waitDivBox);
-
+    
     //facebookHelper.getLastFeed(pageDetails); 
     $('.bigBoxRight').html(divC);
     this.menu.init({
@@ -297,13 +317,17 @@ pageControl.prototype.parsePageDetail = function (pageDetails) {
  * 
  */
 pageControl.prototype.loadPageData = function (kaId,arId) {
+    this.actAccessToken = undefined;
     this.pageId = kaId;
     var pageToken = this.pages[arId];
-    this.actAccessToken = pageToken.access_token;
-    $('.bigBoxRight').append( this.getWait('bigBoxRight') );
-    //start wait screen
-    this.addWaitScreen();
-    facebookHelper.getPagesDetails(kaId,pageToken.access_token);
+    console.log(this.pages[arId]);
+  
+        this.actAccessToken = pageToken.access_token;
+        $('.bigBoxRight').append( this.getWait('bigBoxRight') );
+        //start wait screen
+        this.addWaitScreen();
+        facebookHelper.getPagesDetails(kaId,pageToken.access_token);
+    
 };
  
 /**
