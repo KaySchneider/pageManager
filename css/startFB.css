@@ -78,7 +78,7 @@ root {
     display:block;
     border:0px solid black;
     float:right;
-    
+
 }
 .content {
     width:100%;
@@ -269,7 +269,7 @@ input {
     padding-top:10px;
     margin-bottom:-10px;
     float:left;
-   /* background-color: #98ED31;*/
+    /* background-color: #98ED31;*/
     bottom:-25px;
 }
 
@@ -332,13 +332,17 @@ input {
     background: #F0F1FA;
 }
 .menLeft ._innerC div {
-    background: #F0F1FA;
+    /*background: #F0F1FA;*/
+    background: #EDEFF4;
     border-bottom: 1px solid black;
+    cursor:pointer;
 }
 
 .menLeft ._innerC div:hover {
-    background: #DCE0F5;
+    /*background: #DCE0F5;*/
+    background: #D8DFEA;
     border-bottom: 1px solid black;
+
 }
 
 .menLeft ._innerC div p {
@@ -346,6 +350,12 @@ input {
     width:200px;
     font-size:14px;
     cursor:hand;
+    color:#3B5998;
+    display:block;
+}
+
+.menLeft ._innerC div p:hover {
+    text-decoration: underline;
 }
 
 .grid {
@@ -363,19 +373,21 @@ input {
 } 
 
 .waiter {
-    
+    /*add some content*/
 }
 .headerInfoWrapper {
     clear:both;
 }
 .headerInfoBox {
     background: #F0F1FA;
-    width:150px;
-    height:100px;
-    padding:10px;
-    border:1px solid black;
-    float:left;
-    overflow:hidden;
+    width: 150px;
+    height: 100px;
+    padding: 10px;
+    border: 1px solid silver;
+    float: left;
+    overflow: hidden;
+    margin-left: 5px;
+    border-top: 0px;
 }
 
 .headerInfoBox p {
@@ -448,4 +460,8 @@ p.bnum {
     background:black;
     opacity: 0.5;
     z-index:1000;
+}
+
+.likeContainer {
+    height: 40px;
 }

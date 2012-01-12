@@ -4,7 +4,9 @@
  * loads all the "big" boxes and load it then via javascript!s 
  */
 ?>
-
+<div class="fb1">
+    <h1>page manager </h1>
+</div>
 <div class="grid" >
     <div class="menLeft">
         <div class="search" >
