@@ -130,13 +130,13 @@ pageControl.prototype.addTabCreator = function (data) {
                 }
             }
         });
-        
-        if(typeof pcObj.TabisInstalled == 'undefined' || this.actAccessToken == undefined) {
+       
+        if(typeof pcObj.TabisInstalled == 'undefined' ) {
             var TopContent = pcObj.createNewTabElement(pcObj.pageId,pcObj.actAccessToken);
             var refD = document.getElementsByClassName("clear");
             refD[0].parentNode.insertBefore(TopContent, refD[0]);
           
-        } else {
+        } else if(pcObj.actAccessToken == undefined)  {
             var TopContent = pcObj.ne.createNewElement("div");
             var Msg = pcObj.ne.createText("This page isnt supported!");
             var refD = document.getElementsByClassName("clear");
