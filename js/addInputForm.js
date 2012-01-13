@@ -3,6 +3,8 @@ var addInputForm = function () {
     this.pageId = null;
 }
 
+
+
 addInputForm.prototype.createOuterBox = function () {
     var div = this.ne.createNewDiv("formBox");
     div.setAttribute("id","formOuter");
@@ -46,6 +48,18 @@ addInputForm.prototype.addControls = function () {
     var section = this.createSection();
     var label = this.createPText("FanGate:");
     var controls = "Off<input type='radio' class='_fangate' name='fangate' value='off' /> On <input type='radio' class='_fangate' name='fangate' value='on' /> <br/><b>add custom HTML<b/>";
+    section.appendChild(label);
+    section.innerHTML = section.innerHTML + controls;
+    //ad actions, view and hide the fangate Box
+    
+    return section;
+}
+
+addInputForm.prototype.addMakeStartTab = function () {
+    //is_non_connection_landing_tab
+    var section = this.createSection();
+    var label = this.createPText("Make this tab as nofan startpage:");
+    var controls = "Off<input type='radio' class='_starttab' name='starttab' value='off' /> On <input type='radio' class='_starttab' name='starttab' value='on' /> <br/>";
     section.appendChild(label);
     section.innerHTML = section.innerHTML + controls;
     //ad actions, view and hide the fangate Box
@@ -211,7 +225,33 @@ addInputForm.prototype.addEvents = function () {
                 $('._isFanTxtAr').remove();
             }
         }); 
+         $('._starttab').click(function(){
+            console.log(this);
+             pageControlObj.addWaitScreen();
+            if(this.value == 'on') {
+                //check if this is already in the dom
+                //make here an facebook api call and make this tab as starttab
+                var options = {'is_non_connection_landing_tab':true};
+                var optionsJs = JSON.stringify(options);
+                facebookHelper.editTab(addInObj.pageId,addInObj.accessToken,addInObj.tabId,options);
+            }
+             else if (this.value == 'off') {
+                //edit the facebook tab again and remove the flag starttab  
+                var options = {'is_non_connection_landing_tab':true};
+                facebookHelper.editTab(addInObj.pageId,addInObj.accessToken,addInObj.wallId,options);
+            }
+        }); 
     })(this);
+}
+
+addInputForm.prototype.tabEdited = function (data) {
+    pageControlObj.removeWaitScreen();
+    console.log(data);
+    if(data == 'true') {
+        alert('Page was successfully edited');
+    } else {
+        alert('There was an error');
+    }
 }
 
 addInputForm.prototype.getPageContent = function () {
@@ -261,16 +301,18 @@ addInputForm.prototype.parsePageContentInject = function (data) {
     }
 }
 
-addInputForm.prototype.createFormElements = function (pageId,accessToken,tabId) {
+addInputForm.prototype.createFormElements = function (pageId,accessToken,tabId,wallId) {
      //add wait screen
     pageControlObj.addWaitScreen();
     this.pageId = pageId;
     this.accessToken = accessToken;
     this.tabId = tabId;
+    this.wallId = wallId;
     
     var OuterBox = this.createOuterBox();
     
     var sectionControls = this.addControls();
+    var sectionStartControls = this.addMakeStartTab();
     var FormEl = this.createForm();
     var textBox = this.createInputArea();
     
@@ -278,6 +320,7 @@ addInputForm.prototype.createFormElements = function (pageId,accessToken,tabId) 
     var deleteBtn = this.addDeleteBtn();
     var clearer = this.ne.createNewDiv('clearDiv');
     OuterBox.appendChild(FormEl);
+    FormEl.appendChild(sectionStartControls);
     FormEl.appendChild(sectionControls);    
     FormEl.appendChild(textBox);
     FormEl.appendChild(clearer);

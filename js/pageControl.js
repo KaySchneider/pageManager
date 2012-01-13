@@ -80,6 +80,8 @@ pageControl.prototype.receiveMessage = function (message) {
         this.showAllTabs(message.data);
     } else if (message.message == 'receiveTabs') {
         this.addTabCreator(message.data);
+    } else if (message.message == 'editTab') {
+        this.form.tabEdited(message.data);
     }
 }
 
@@ -95,6 +97,12 @@ pageControl.prototype.addTabCreator = function (data) {
         $(data.data).each(function (item,value) {
             //is our Tab there ?
             console.log(value);
+            //the walltabId
+            if(typeof value.is_permanent != 'undefined' ) {
+                if(value.is_permanent == true && value.name == 'Wall') {
+                    pcObj.wallId = value.id;
+                }
+            }
             if(typeof value.application != 'undefined' && value.application != null) {
                 if(value.application.id == appId) {
                     //the tab is an pageTab of this app
@@ -152,7 +160,7 @@ pageControl.prototype.addTabCreator = function (data) {
  */
 pageControl.prototype.EditPageTab = function () {
     if($('.formBox').length <=0) {  
-        var FormControl = this.form.createFormElements(this.pageId, this.actAccessToken,this.tabId);
+        var FormControl = this.form.createFormElements(this.pageId, this.actAccessToken,this.tabId,this.wallId);
         $(".bigBoxRight").append(FormControl);
         //after inject this to the document. add some evnts
         this.form.addEvents();
