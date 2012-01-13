@@ -1,4 +1,10 @@
+$(document).ready(function () {
+   fbEnsureInitObj(resizeMe); 
+});
 
+function resizeMe() {
+    FB.Canvas.setAutoResize();
+}
 /**
 * if the all.js is loaded make the init
 */
@@ -11,16 +17,12 @@ window.fbAsyncInit = function() {
         oauth : true
     });
     fbApiInit = true; //init flag
-    FB.Canvas.setSize({
-        width: 700, 
-        height: 800
-    });
+    FB.Canvas.setAutoResize();
 };
-/**
+
 function fbEnsureInitObj( method) {
     if(!window.fbApiInit) {
        setTimeout(function() {
-            console.log(window.fbApiInit);
             fbEnsureInitObj(method);
         }, 50);
     } else {
@@ -29,4 +31,3 @@ function fbEnsureInitObj( method) {
         }
     }
 }
-**/

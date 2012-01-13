@@ -3,6 +3,7 @@
       xmlns:og="http://opengraphprotocol.org/schema/"
       xmlns:fb="http://www.facebook.com/2008/fbml" >
 <head>
+    <script src="js/jquery-1.6.min.js" language="javascript"></script>
     <script src="js/tab.js" language="javascript"></script>
     <link rel="stylesheet" type="text/css" href="css/tab.css"/>
 <body>
