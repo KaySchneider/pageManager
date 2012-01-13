@@ -52,7 +52,7 @@ root {
 }
 .userInfo {
     position:absolute;
-    top:0x;
+    top:0px;
     float:left;
     margin-left:150px;
     margin-top:10px;
@@ -404,12 +404,14 @@ p.bnum {
 .clear {
     clear:both;
 }
+
 .formBox {
-    padding:20px;
+    padding: 20px;
     background: #EDEFF4;
     border: 1px solid #D8DFEA;
     z-index: 1000;
-    float:right;
+    float: left;
+    margin-top: 10px;
 }
 
 .button {

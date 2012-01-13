@@ -5,10 +5,10 @@
  */
 ?>
 <div class="fb1">
-    <h1 class="hgh">page manager </h1> 
-    <div class="likeContainer" >
+    <h1 class="hgh">page manager [alpha]</h1> 
+   <!-- <div class="likeContainer" >
         <fb:like href="http://www.facebook.com/apps/application.php?id=<?php print APP_ID ?>" show_faces="false" width="200" font="tahoma"></fb:like>
-    </div>
+    </div> -->
     <div class="clearDiv" ></div>
 </div>
 <div class="grid" >
