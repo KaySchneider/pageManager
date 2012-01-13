@@ -10,6 +10,8 @@
  *  
  * 
  */
+//add here the purifier autoloader! We only need them here!
+require BASEPATH . DIRECTORY_SEPARATOR . 'addOns' . DIRECTORY_SEPARATOR . 'library' . DIRECTORY_SEPARATOR . 'HTMLPurifier.auto.php';
 
 class saveContentCommand implements command {
  
@@ -29,17 +31,34 @@ class saveContentCommand implements command {
             $fbObject = $facebook->getFacebook();
             $fbWorker = new FacebookOperation($fbObject);
             $isAdmin =  $fbWorker->getPageInfo($request->getParameter('pageId'), $request->getParameter('accessToken'));
+            //if the user isnt an admin of this pageId
             if(!isset($isAdmin['can_post']) || $isAdmin['can_post'] == FALSE) {
                echo json_encode(array('result'=>'ok') );
+               die();
             }
             $pageId = $request->getParameter('pageId');
-            if(empty( $pageId) )
+            //if the pageId is empty, in this case die and say everything is alright
+            if(empty( $pageId) ) {
                  echo json_encode(array('result'=>'ok') );
+                 die();
+            }
+            //check if the user is connected isnt die!
             $user = $fbWorker->checkLoginState();
             $userId = $user['user_id'];
-        //tabContent
+            if(empty( $userId) ) {
+                echo json_encode(array('result'=>'ok') );
+                die();
+            }
+        //tabContent now save it
         $tabContent = new tabContent($pageId);
-        $tabContent->saveDataToDB($request->getParameter('fanGate'), $request->getParameter('content'), $request->getParameter('isFanContent'), $userId);
+        //now clean the content of bad and dirty attacks to the user...
+        $config = HTMLPurifier_Config::createDefault();
+        $config->set('Cache.DefinitionImpl', null);
+         $purifier = new HTMLPurifier($config);
+         
+         $clean_html_content = $purifier->purify($request->getParameter('content'));
+         $clean_html_isFan = $purifier->purify($request->getParameter('isFanContent'));
+        $tabContent->saveDataToDB($request->getParameter('fanGate'), $clean_html_content, $clean_html_isFan , $userId);
         echo json_encode(array('result'=>'ok') );
         die();
         }
