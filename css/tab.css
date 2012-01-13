@@ -1,0 +1,13 @@
+.content {
+    min-height: 400px;
+    width: 750px;
+    overflow: hidden;
+}
+
+.footer {
+    display:block;
+    padding-top: 40px;
+    float:right;
+    font-family: arial;
+    font-size: 10px;
+}
