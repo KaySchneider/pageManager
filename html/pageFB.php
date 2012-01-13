@@ -31,9 +31,7 @@
 
         <div id="chat_invite_container" style="position: absolute; left: 100px; top: 200px"></div>
         <div id="fb-root"></div>
-        <div class="likeContainer">
-            <fb:like href="http://www.facebook.com/apps/application.php?id=<?php print APP_ID ?>" show_faces="false" width="200" font="tahoma"></fb:like>
-        </div>
+        
         <?php
         /**
          *  content output

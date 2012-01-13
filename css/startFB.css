@@ -464,4 +464,15 @@ p.bnum {
 
 .likeContainer {
     height: 40px;
+    float:right;
+}
+
+#LikePluginPagelet {
+    float:right;
+}
+
+.hgh {
+    float:left;
+    height:50px;
+    width:200px;
 }
