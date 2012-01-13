@@ -16,15 +16,17 @@ window.fbAsyncInit = function() {
         height: 800
     });
 };
-function fbEnsureInitObj(obj, method) {
+/**
+function fbEnsureInitObj( method) {
     if(!window.fbApiInit) {
        setTimeout(function() {
             console.log(window.fbApiInit);
-            fbEnsureInitObj(obj,method);
+            fbEnsureInitObj(method);
         }, 50);
     } else {
-        if(obj) {
-            obj.__call(method);
+        if(method) {
+            method();
         }
     }
 }
+**/

@@ -16,7 +16,7 @@ define('CANVAS_URL', "https://apps.facebook.com/pagehelper/");
 define('FACEBOOK_REG_PERMS', 'manage_pages');
 //facebook stuff ends here
 //setting development stuff
-define('CHECKTIME', TRUE);
+define('CHECKTIME', FALSE);
 
 define('LOCALE', 'de');
 define('DETAIL_LENGTH', 40);
