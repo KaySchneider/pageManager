@@ -7,7 +7,7 @@
  * 
  */
 
-define('PROJEKT_NAME', 'snipFrame');
+define('PROJEKT_NAME', 'pageHelper');
 define('BASEPATH', dirname(dirname(__FILE__)));
 define('CSS_DIR', 'css' . DIRECTORY_SEPARATOR);
 //facebook stuff
